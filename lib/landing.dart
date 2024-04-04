@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tugas_login/page2.dart';
+import 'package:tugas_login/register.dart';
 
 // ignore: camel_case_types
 class page1 extends StatefulWidget {

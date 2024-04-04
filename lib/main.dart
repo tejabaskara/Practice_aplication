@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tugas_login/page1.dart';
+import 'package:tugas_login/landing.dart';
 
 void main() {
   runApp(MyApp());
