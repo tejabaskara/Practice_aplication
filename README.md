@@ -1,11 +1,17 @@
-# tugas_login
+# Mobile Application
 
-A new Flutter project.
+This is my first time created mobile application with flutter.
 
 ## Getting Started
+This mobile application have a login page and register page. I will adding more feature in the future 
 
-This project is a starting point for a Flutter application.
 
+
+
+
+
+
+## resources
 A few resources to get you started if this is your first Flutter project:
 
 - [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
