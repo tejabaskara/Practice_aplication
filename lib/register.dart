@@ -19,17 +19,17 @@ class _page2State extends State<page2> {
         body: ListView(children: [
       Column(children: [
         Padding(
-            padding: EdgeInsets.only(top: 64),
+            padding: EdgeInsets.only(top: 50),
             child: Center(
                 child: Container(
               width: 280,
-              height: 180,
+              height: 190,
               decoration: BoxDecoration(
-                color: Color(0xffD9D9D9),
-                // image: DecorationImage(
-                //   image: AssetImage('assets/images/register_image.jpg'),
-                //   fit: BoxFit.fill,
-                // ),
+                // color: Color(0xffD9D9D9),
+                image: DecorationImage(
+                  image: AssetImage('assets/images/register_image.jpg'),
+                  fit: BoxFit.fitHeight,
+                ),
               ),
             ))),
         Padding(
@@ -168,7 +168,28 @@ class _page2State extends State<page2> {
                   ),
                 ),
               )),
-        ])
+        ]),
+        Padding(
+            padding: EdgeInsets.only(top: 30),
+            child: ElevatedButton(
+              onPressed: () {},
+              child: Text(
+                "REGISTER",
+                style: GoogleFonts.inter(
+                  textStyle: TextStyle(
+                    color: Colors.black,
+                    fontSize: 12,
+                  ),
+                ),
+              ),
+              style: ElevatedButton.styleFrom(
+                  minimumSize: Size(158, 50),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  backgroundColor: Color(0xffD9D9D9),
+                  foregroundColor: Colors.black),
+            ))
       ])
     ]));
   }

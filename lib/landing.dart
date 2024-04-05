@@ -104,7 +104,7 @@ class _page1State extends State<page1> {
             padding: EdgeInsets.only(top: 75, left: 20),
             child: ElevatedButton(
               child: Text(
-                "SIGN UP",
+                "REGISTER",
                 style: GoogleFonts.inter(
                   textStyle: TextStyle(
                     color: Colors.black,
