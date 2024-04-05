@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tugas_login/login.dart';
 import 'package:tugas_login/register.dart';
 
 // ignore: camel_case_types
@@ -148,7 +149,10 @@ class _page1State extends State<page1> {
         Padding(
             padding: EdgeInsets.only(top: 75, right: 20),
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const page3()));
+              },
               child: Text(
                 "LOGIN",
                 style: GoogleFonts.inter(
