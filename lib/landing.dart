@@ -122,7 +122,7 @@ class _page1State extends State<page1> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  backgroundColor: Color(0xffD9D9D9),
+                  backgroundColor: Color(0xff8FFF74),
                   foregroundColor: Colors.black),
             )
             // Container(
@@ -167,7 +167,7 @@ class _page1State extends State<page1> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  backgroundColor: Color(0xffD9D9D9),
+                  backgroundColor: Color(0xff8FFF74),
                   foregroundColor: Colors.black),
             ))
       ],

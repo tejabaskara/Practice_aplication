@@ -12,6 +12,7 @@ class page3 extends StatefulWidget {
 class _page3State extends State<page3> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  bool isChecked = false;
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +91,28 @@ class _page3State extends State<page3> {
                     )))),
         Row(children: [
           Padding(
-            padding: EdgeInsets.only(top: 10, left: 50),
+              padding: EdgeInsets.only(top: 20, left: 40),
+              child: Row(
+                children: [
+                  Checkbox(
+                    value: isChecked,
+                    onChanged: (value) {
+                      setState(() {
+                        isChecked = value as bool;
+                      });
+                    },
+                  ),
+                  Text("Remember me",
+                      style: GoogleFonts.inter(
+                        textStyle: TextStyle(
+                          color: Colors.black,
+                          fontSize: 12,
+                        ),
+                      ))
+                ],
+              )),
+          Padding(
+            padding: EdgeInsets.only(top: 20, left: 30),
             child: TextButton(
                 onPressed: () {
                   Navigator.push(context,
