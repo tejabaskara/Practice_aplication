@@ -97,9 +97,9 @@ class _page1State extends State<page1> {
         ));
   }
 
-  Center buttonLoginRegis(context) {
-    return Center(
-        child: Row(
+  Row buttonLoginRegis(context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Padding(
             padding: EdgeInsets.only(top: 75, left: 20),
@@ -114,8 +114,10 @@ class _page1State extends State<page1> {
                 ),
               ),
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const page2()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const registerPage()));
               },
               style: ElevatedButton.styleFrom(
                   minimumSize: Size(166, 70),
@@ -151,7 +153,7 @@ class _page1State extends State<page1> {
             child: ElevatedButton(
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const page3()));
+                    MaterialPageRoute(builder: (context) => const loginPage()));
               },
               child: Text(
                 "LOGIN",
@@ -171,7 +173,7 @@ class _page1State extends State<page1> {
                   foregroundColor: Colors.black),
             ))
       ],
-    ));
+    );
   }
 
   Center introText() {

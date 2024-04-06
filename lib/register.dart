@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tugas_login/home.dart';
 import 'package:tugas_login/login.dart';
 
-class page2 extends StatefulWidget {
-  const page2({super.key});
+class registerPage extends StatefulWidget {
+  const registerPage({super.key});
 
   @override
-  State<page2> createState() => _page2State();
+  State<registerPage> createState() => _registerPageState();
 }
 
-class _page2State extends State<page2> {
+class _registerPageState extends State<registerPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -149,8 +150,10 @@ class _page2State extends State<page2> {
             padding: EdgeInsets.only(top: 10, left: 50),
             child: TextButton(
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const page3()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const loginPage()));
                 },
                 child: Text(
                   "Already have an Account ?",
@@ -176,7 +179,11 @@ class _page2State extends State<page2> {
         Padding(
             padding: EdgeInsets.only(top: 30),
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => const homePage()));
+              },
               child: Text(
                 "REGISTER",
                 style: GoogleFonts.inter(

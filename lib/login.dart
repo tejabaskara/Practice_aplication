@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tugas_login/register.dart';
 
-class page3 extends StatefulWidget {
-  const page3({super.key});
+class loginPage extends StatefulWidget {
+  const loginPage({super.key});
 
   @override
-  State<page3> createState() => _page3State();
+  State<loginPage> createState() => _loginPageState();
 }
 
-class _page3State extends State<page3> {
+class _loginPageState extends State<loginPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool isChecked = false;
@@ -115,8 +115,10 @@ class _page3State extends State<page3> {
             padding: EdgeInsets.only(top: 20, left: 30),
             child: TextButton(
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const page2()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const registerPage()));
                 },
                 child: Text(
                   "Don't have an Account ?",
