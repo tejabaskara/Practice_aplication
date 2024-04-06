@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tugas_login/home.dart';
 import 'package:tugas_login/register.dart';
 
 class loginPage extends StatefulWidget {
@@ -144,7 +145,11 @@ class _loginPageState extends State<loginPage> {
         Padding(
             padding: EdgeInsets.only(top: 30),
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => const homePage()));
+              },
               child: Text(
                 "LOGIN",
                 style: GoogleFonts.inter(
