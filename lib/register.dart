@@ -22,7 +22,7 @@ class _registerPageState extends State<registerPage> {
       Column(children: [
         imageTop(),
         Padding(
-          padding: EdgeInsets.only(top: 20),
+          padding: EdgeInsets.only(top: 10),
           child: Center(
             child: Text(
               "Register",
@@ -36,11 +36,10 @@ class _registerPageState extends State<registerPage> {
           ),
         ),
         Padding(
-            padding: EdgeInsets.only(top: 50),
+            padding: EdgeInsets.only(top: 30),
             child: Center(
                 child: SizedBox(
                     width: 276,
-                    height: 40,
                     child: TextField(
                       controller: nameController,
                       decoration: InputDecoration(
@@ -67,7 +66,6 @@ class _registerPageState extends State<registerPage> {
             child: Center(
                 child: SizedBox(
                     width: 276,
-                    height: 40,
                     child: TextField(
                       controller: emailController,
                       decoration: InputDecoration(
@@ -94,7 +92,6 @@ class _registerPageState extends State<registerPage> {
             child: Center(
                 child: SizedBox(
                     width: 276,
-                    height: 40,
                     child: TextField(
                       controller: passwordController,
                       obscureText: true,
@@ -122,7 +119,6 @@ class _registerPageState extends State<registerPage> {
             child: Center(
                 child: SizedBox(
                     width: 276,
-                    height: 40,
                     child: TextField(
                       controller: confirmPasswordController,
                       obscureText: true,
@@ -177,7 +173,7 @@ class _registerPageState extends State<registerPage> {
           )
         ]),
         Padding(
-            padding: EdgeInsets.only(top: 30),
+            padding: EdgeInsets.only(top: 10, bottom: 50),
             child: ElevatedButton(
               onPressed: () {
                 Navigator.pop(context);
@@ -194,7 +190,7 @@ class _registerPageState extends State<registerPage> {
                 ),
               ),
               style: ElevatedButton.styleFrom(
-                  minimumSize: Size(158, 50),
+                  minimumSize: Size(160, 50),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),

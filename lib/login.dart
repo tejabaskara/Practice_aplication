@@ -40,8 +40,8 @@ class _loginPageState extends State<loginPage> {
             child: Center(
                 child: SizedBox(
                     width: 276,
-                    height: 40,
-                    child: TextField(
+                    // height: 40,
+                    child: TextFormField(
                       controller: emailController,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
@@ -58,8 +58,11 @@ class _loginPageState extends State<loginPage> {
                           borderSide: BorderSide(color: Colors.red, width: 1),
                         ),
                       ),
-                      onChanged: (value) {
-                        print(emailController.text);
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        return null;
                       },
                     )))),
         Padding(
@@ -67,8 +70,7 @@ class _loginPageState extends State<loginPage> {
             child: Center(
                 child: SizedBox(
                     width: 276,
-                    height: 40,
-                    child: TextField(
+                    child: TextFormField(
                       controller: passwordController,
                       obscureText: true,
                       decoration: InputDecoration(
@@ -86,8 +88,11 @@ class _loginPageState extends State<loginPage> {
                           borderSide: BorderSide(color: Colors.red, width: 1),
                         ),
                       ),
-                      onChanged: (value) {
-                        print(passwordController.text);
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your password';
+                        }
+                        return null;
                       },
                     )))),
         Row(children: [
