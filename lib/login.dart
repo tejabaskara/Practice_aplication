@@ -13,7 +13,9 @@ class loginPage extends StatefulWidget {
 class _loginPageState extends State<loginPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
   bool isChecked = false;
+  bool isVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +74,7 @@ class _loginPageState extends State<loginPage> {
                     width: 276,
                     child: TextFormField(
                       controller: passwordController,
-                      obscureText: true,
+                      obscureText: !isVisible,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: 'Password',
@@ -87,13 +89,23 @@ class _loginPageState extends State<loginPage> {
                           borderRadius: BorderRadius.circular(10),
                           borderSide: BorderSide(color: Colors.red, width: 1),
                         ),
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              isVisible = !isVisible;
+                            });
+                          },
+                          icon: (isVisible
+                              ? Icon(Icons.visibility)
+                              : Icon(Icons.visibility_off)),
+                        ),
                       ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your password';
-                        }
-                        return null;
-                      },
+                      // validator: (value) {
+                      //   if (value == null || value.isEmpty) {
+                      //     return 'Please enter your password';
+                      //   }
+                      //   return null;
+                      // },
                     )))),
         Row(children: [
           Padding(

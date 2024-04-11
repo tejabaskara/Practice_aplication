@@ -15,6 +15,10 @@ class _registerPageState extends State<registerPage> {
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
+
+  bool isVisible = false;
+  bool isVisibleConfirm = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,25 +98,31 @@ class _registerPageState extends State<registerPage> {
                     width: 276,
                     child: TextField(
                       controller: passwordController,
-                      obscureText: true,
+                      obscureText: !isVisible,
                       decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Password',
-                        fillColor: Color(0xffD9D9D9),
-                        filled: true,
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide:
-                              BorderSide(color: Colors.blueGrey, width: 1),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.red, width: 1),
-                        ),
-                      ),
-                      onChanged: (value) {
-                        print(passwordController.text);
-                      },
+                          border: OutlineInputBorder(),
+                          labelText: 'Password',
+                          fillColor: Color(0xffD9D9D9),
+                          filled: true,
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide:
+                                BorderSide(color: Colors.blueGrey, width: 1),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(color: Colors.red, width: 1),
+                          ),
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                isVisible = !isVisible;
+                              });
+                            },
+                            icon: (isVisible
+                                ? Icon(Icons.visibility)
+                                : Icon(Icons.visibility_off)),
+                          )),
                     )))),
         Padding(
             padding: EdgeInsets.only(top: 20),
@@ -121,25 +131,31 @@ class _registerPageState extends State<registerPage> {
                     width: 276,
                     child: TextField(
                       controller: confirmPasswordController,
-                      obscureText: true,
+                      obscureText: !isVisibleConfirm,
                       decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Confirm Password',
-                        fillColor: Color(0xffD9D9D9),
-                        filled: true,
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide:
-                              BorderSide(color: Colors.blueGrey, width: 1),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.red, width: 1),
-                        ),
-                      ),
-                      onChanged: (value) {
-                        print(confirmPasswordController.text);
-                      },
+                          border: OutlineInputBorder(),
+                          labelText: 'Confirm Password',
+                          fillColor: Color(0xffD9D9D9),
+                          filled: true,
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide:
+                                BorderSide(color: Colors.blueGrey, width: 1),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(color: Colors.red, width: 1),
+                          ),
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                isVisibleConfirm = !isVisibleConfirm;
+                              });
+                            },
+                            icon: (isVisibleConfirm
+                                ? Icon(Icons.visibility)
+                                : Icon(Icons.visibility_off)),
+                          )),
                     )))),
         Row(children: [
           Padding(
