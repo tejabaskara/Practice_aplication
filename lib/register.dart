@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tugas_login/home.dart';
-import 'package:tugas_login/login.dart';
 
 class registerPage extends StatefulWidget {
   const registerPage({super.key});
@@ -11,13 +9,20 @@ class registerPage extends StatefulWidget {
 }
 
 class _registerPageState extends State<registerPage> {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController nameController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController confirmPasswordController = TextEditingController();
+  final emailController = TextEditingController();
+  final nameController = TextEditingController();
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
 
   bool isVisible = false;
   bool isVisibleConfirm = false;
+
+  void dispose() {
+    emailController.dispose();
+    nameController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -162,10 +167,11 @@ class _registerPageState extends State<registerPage> {
             padding: EdgeInsets.only(top: 10, left: 50),
             child: TextButton(
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const loginPage()));
+                  Navigator.pushNamed(context, '/login');
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (context) => const loginPage()));
                 },
                 child: Text(
                   "Already have an Account ?",
@@ -193,8 +199,12 @@ class _registerPageState extends State<registerPage> {
             child: ElevatedButton(
               onPressed: () {
                 Navigator.pop(context);
-                Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => const homePage()));
+                Navigator.pushReplacementNamed(context, '/profile', arguments: {
+                  'name': nameController.text,
+                  'email': emailController.text
+                });
+                // Navigator.of(context).pushReplacement(
+                //     MaterialPageRoute(builder: (context) => const homePage()));
               },
               child: Text(
                 "REGISTER",

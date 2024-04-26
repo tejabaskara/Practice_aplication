@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tugas_login/login.dart';
-import 'package:tugas_login/register.dart';
 
 // ignore: camel_case_types
 class page1 extends StatefulWidget {
@@ -114,10 +112,11 @@ class _page1State extends State<page1> {
                 ),
               ),
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const registerPage()));
+                Navigator.pushNamed(context, '/register');
+                // Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //         builder: (context) => const registerPage()));
               },
               style: ElevatedButton.styleFrom(
                   minimumSize: Size(166, 70),
@@ -152,8 +151,9 @@ class _page1State extends State<page1> {
             padding: EdgeInsets.only(top: 75, right: 20),
             child: ElevatedButton(
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const loginPage()));
+                Navigator.pushNamed(context, '/login');
+                // Navigator.push(context,
+                //     MaterialPageRoute(builder: (context) => const loginPage()));
               },
               child: Text(
                 "LOGIN",
