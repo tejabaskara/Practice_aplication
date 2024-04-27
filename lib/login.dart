@@ -176,7 +176,7 @@ class _loginPageState extends State<loginPage> {
               onPressed: () {
                 goLogin();
                 Navigator.pop(context);
-                Navigator.pushReplacementNamed(context, '/home');
+                Navigator.pushReplacementNamed(context, '/profile');
                 // Navigator.of(context).pushReplacement(
                 //     MaterialPageRoute(builder: (context) => const homePage()));
               },
