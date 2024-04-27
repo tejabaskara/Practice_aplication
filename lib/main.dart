@@ -4,9 +4,11 @@ import 'package:tugas_login/landing.dart';
 import 'package:tugas_login/login.dart';
 import 'package:tugas_login/profile.dart';
 import 'package:tugas_login/register.dart';
+import 'package:get_storage/get_storage.dart';
 
-void main() {
-  runApp(MyApp());
+Future<void> main() async {
+  await GetStorage.init;
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

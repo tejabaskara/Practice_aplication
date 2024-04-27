@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tugas_login/home.dart';
-import 'package:tugas_login/register.dart';
+import 'package:dio/dio.dart';
+import 'package:get_storage/get_storage.dart';
 
 class loginPage extends StatefulWidget {
   const loginPage({super.key});
@@ -11,11 +11,21 @@ class loginPage extends StatefulWidget {
 }
 
 class _loginPageState extends State<loginPage> {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   bool isChecked = false;
   bool isVisible = false;
+
+  final _dio = Dio();
+  final _storage = GetStorage();
+  final _apiUrl = 'https://mobileapis.manpits.xyz/api';
+
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -133,10 +143,11 @@ class _loginPageState extends State<loginPage> {
             padding: EdgeInsets.only(top: 20, left: 30),
             child: TextButton(
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const registerPage()));
+                  Navigator.pushNamed(context, '/register');
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (context) => const registerPage()));
                 },
                 child: Text(
                   "Don't have an Account ?",
@@ -163,9 +174,11 @@ class _loginPageState extends State<loginPage> {
             padding: EdgeInsets.only(top: 30),
             child: ElevatedButton(
               onPressed: () {
+                goLogin();
                 Navigator.pop(context);
-                Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => const homePage()));
+                Navigator.pushReplacementNamed(context, '/home');
+                // Navigator.of(context).pushReplacement(
+                //     MaterialPageRoute(builder: (context) => const homePage()));
               },
               child: Text(
                 "LOGIN",
@@ -186,6 +199,22 @@ class _loginPageState extends State<loginPage> {
             ))
       ])
     ]));
+  }
+
+  void goLogin() async {
+    try {
+      final _response = await _dio.post(
+        '${_apiUrl}/login',
+        data: {
+          'email': emailController.text,
+          'password': passwordController.text
+        },
+      );
+      print(_response.data);
+      _storage.write('token', _response.data['data']['token']);
+    } on DioException catch (e) {
+      print('${e.response} - ${e.response?.statusCode}');
+    }
   }
 
   Padding imageTop() {
