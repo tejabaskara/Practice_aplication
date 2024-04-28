@@ -212,6 +212,19 @@ class _loginPageState extends State<loginPage> {
       );
       print(_response.data);
       _storage.write('token', _response.data['data']['token']);
+      final _userInfo = await _dio.get(
+        '${_apiUrl}/user',
+        options: Options(
+          headers: {'Authorization': 'Bearer ${_storage.read('token')}'},
+        ),
+      );
+      print(_response.data);
+      _storage.write('id', _userInfo.data['data']['user']['id']);
+      _storage.write('email', _userInfo.data['data']['user']['email']);
+      _storage.write('name', _userInfo.data['data']['user']['name']);
+      print(_storage.read('id'));
+      print(_storage.read('email'));
+      print(_storage.read('name'));
     } on DioException catch (e) {
       print('${e.response} - ${e.response?.statusCode}');
     }

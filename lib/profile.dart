@@ -67,7 +67,7 @@ class _profilePageState extends State<profilePage> {
                           ),
                           child: Padding(
                               padding: EdgeInsets.only(top: 5, left: 10),
-                              child: Text('hello@gmail.com',
+                              child: Text(_storage.read('email'),
                                   style: GoogleFonts.inter(
                                     textStyle: TextStyle(
                                       color: Colors.black,
@@ -85,7 +85,7 @@ class _profilePageState extends State<profilePage> {
                       Container(
                           width: 280,
                           height: 20,
-                          child: Text('Name',
+                          child: Text("Name",
                               style: GoogleFonts.inter(
                                 textStyle: TextStyle(
                                   color: Colors.black,
@@ -105,7 +105,7 @@ class _profilePageState extends State<profilePage> {
                           ),
                           child: Padding(
                               padding: EdgeInsets.only(top: 5, left: 10),
-                              child: Text('Niceguy',
+                              child: Text(_storage.read('name'),
                                   style: GoogleFonts.inter(
                                     textStyle: TextStyle(
                                       color: Colors.black,
@@ -185,6 +185,26 @@ class _profilePageState extends State<profilePage> {
     );
   }
 
+  // void userInfo() async {
+  //   try {
+  //     final _response = await _dio.get(
+  //       '${_apiUrl}/user',
+  //       options: Options(
+  //         headers: {'Authorization': 'Bearer ${_storage.read('token')}'},
+  //       ),
+  //     );
+  //     print(_response.data);
+  //     _storage.write('id', _response.data['data']['user']['id']);
+  //     _storage.write('email', _response.data['data']['user']['email']);
+  //     _storage.write('name', _response.data['data']['user']['name']);
+  //     print(_storage.read('id'));
+  //     print(_storage.read('email'));
+  //     print(_storage.read('name'));
+  //   } on DioException catch (e) {
+  //     print('${e.response} - ${e.response?.statusCode}');
+  //   }
+  // }
+
   void logout() async {
     try {
       final _response = await _dio.get(
@@ -196,26 +216,6 @@ class _profilePageState extends State<profilePage> {
       print(_response.data);
       _storage.erase();
       Navigator.pushReplacementNamed(context, '/');
-    } on DioException catch (e) {
-      print('${e.response} - ${e.response?.statusCode}');
-    }
-  }
-
-  void userInfo() async {
-    try {
-      final _response = await _dio.get(
-        '${_apiUrl}/user',
-        options: Options(
-          headers: {'Authorization': 'Bearer ${_storage.read('token')}'},
-        ),
-      );
-      print(_response.data);
-      _storage.write('id', _response.data['data']['user']['id']);
-      _storage.write('email', _response.data['data']['user']['email']);
-      _storage.write('name', _response.data['data']['user']['name']);
-      print(_storage.read('id'));
-      print(_storage.read('email'));
-      print(_storage.read('name'));
     } on DioException catch (e) {
       print('${e.response} - ${e.response?.statusCode}');
     }
