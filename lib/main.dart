@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tugas_login/anggota.dart';
 import 'package:tugas_login/home.dart';
 import 'package:tugas_login/landing.dart';
 import 'package:tugas_login/login.dart';
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
         '/login': (context) => const loginPage(),
         '/home': (context) => const homePage(),
         '/profile': (context) => const profilePage(),
+        '/anggota': (context) => const anggotaPage(),
       },
       initialRoute: '/',
       // home: page1(),

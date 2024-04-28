@@ -175,8 +175,7 @@ class _loginPageState extends State<loginPage> {
             child: ElevatedButton(
               onPressed: () {
                 goLogin();
-                Navigator.pop(context);
-                Navigator.pushReplacementNamed(context, '/profile');
+
                 // Navigator.of(context).pushReplacement(
                 //     MaterialPageRoute(builder: (context) => const homePage()));
               },
@@ -225,6 +224,8 @@ class _loginPageState extends State<loginPage> {
       print(_storage.read('id'));
       print(_storage.read('email'));
       print(_storage.read('name'));
+      Navigator.pop(context);
+      Navigator.pushReplacementNamed(context, '/home');
     } on DioException catch (e) {
       print('${e.response} - ${e.response?.statusCode}');
     }

@@ -279,7 +279,7 @@ class _registerPageState extends State<registerPage> {
       print(_storage.read('email'));
       print(_storage.read('name'));
       Navigator.pop(context);
-      Navigator.pushReplacementNamed(context, '/profile');
+      Navigator.pushReplacementNamed(context, '/home');
     } on DioException catch (e) {
       print('${e.response} - ${e.response?.statusCode}');
     }
