@@ -113,10 +113,6 @@ class _page1State extends State<page1> {
               ),
               onPressed: () {
                 Navigator.pushNamed(context, '/register');
-                // Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //         builder: (context) => const registerPage()));
               },
               style: ElevatedButton.styleFrom(
                   minimumSize: Size(166, 70),
@@ -125,35 +121,13 @@ class _page1State extends State<page1> {
                   ),
                   backgroundColor: Color(0xff8FFF74),
                   foregroundColor: Colors.black),
-            )
-            // Container(
-            //   width: 166,
-            //   height: 70,
-            //   child: Center(
-            //     child: Text(
-            //       "SIGN UP",
-            //       style: GoogleFonts.inter(
-            //         textStyle: TextStyle(
-            //           color: Colors.black,
-            //           fontSize: 12,
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            //   decoration: BoxDecoration(
-            //     color: Color(0xffD9D9D9),
-            //     borderRadius: BorderRadius.circular(10),
-            //   ),
-            // )
-            ),
+            )),
         SizedBox(width: 20),
         Padding(
             padding: EdgeInsets.only(top: 75, right: 20),
             child: ElevatedButton(
               onPressed: () {
                 Navigator.pushNamed(context, '/login');
-                // Navigator.push(context,
-                //     MaterialPageRoute(builder: (context) => const loginPage()));
               },
               child: Text(
                 "LOGIN",

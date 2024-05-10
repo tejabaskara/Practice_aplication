@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:dio/dio.dart';
-import 'package:get_storage/get_storage.dart';
+import 'package:tugas_login/dataSource/api.dart';
 
 class registerPage extends StatefulWidget {
   const registerPage({super.key});
@@ -18,10 +17,6 @@ class _registerPageState extends State<registerPage> {
 
   bool isVisible = false;
   bool isVisibleConfirm = false;
-
-  final _dio = Dio();
-  final _storage = GetStorage();
-  final _apiUrl = 'https://mobileapis.manpits.xyz/api';
 
   void dispose() {
     emailController.dispose();
@@ -204,7 +199,8 @@ class _registerPageState extends State<registerPage> {
             padding: EdgeInsets.only(top: 10, bottom: 50),
             child: ElevatedButton(
               onPressed: () {
-                goRegister();
+                registerUser(nameController.text, emailController.text,
+                    passwordController.text, context);
                 // Navigator.of(context).pushReplacement(
                 //     MaterialPageRoute(builder: (context) => const homePage()));
               },
@@ -246,42 +242,42 @@ class _registerPageState extends State<registerPage> {
         )));
   }
 
-  void goRegister() async {
-    try {
-      final _register = await _dio.post(
-        '${_apiUrl}/register',
-        data: {
-          'name': nameController.text,
-          'email': emailController.text,
-          'password': passwordController.text
-        },
-      );
-      final _login = await _dio.post(
-        '${_apiUrl}/login',
-        data: {
-          'email': emailController.text,
-          'password': passwordController.text
-        },
-      );
-      _storage.write('token', _login.data['data']['token']);
-      print(_register.data);
-      print(_login.data);
-      final _userInfo = await _dio.get(
-        '${_apiUrl}/user',
-        options: Options(
-          headers: {'Authorization': 'Bearer ${_storage.read('token')}'},
-        ),
-      );
-      _storage.write('id', _userInfo.data['data']['user']['id']);
-      _storage.write('email', _userInfo.data['data']['user']['email']);
-      _storage.write('name', _userInfo.data['data']['user']['name']);
-      print(_storage.read('id'));
-      print(_storage.read('email'));
-      print(_storage.read('name'));
-      Navigator.pop(context);
-      Navigator.pushReplacementNamed(context, '/home');
-    } on DioException catch (e) {
-      print('${e.response} - ${e.response?.statusCode}');
-    }
-  }
+  // void goRegister() async {
+  //   try {
+  //     final _register = await _dio.post(
+  //       '${_apiUrl}/register',
+  //       data: {
+  //         'name': nameController.text,
+  //         'email': emailController.text,
+  //         'password': passwordController.text
+  //       },
+  //     );
+  //     final _login = await _dio.post(
+  //       '${_apiUrl}/login',
+  //       data: {
+  //         'email': emailController.text,
+  //         'password': passwordController.text
+  //       },
+  //     );
+  //     _storage.write('token', _login.data['data']['token']);
+  //     print(_register.data);
+  //     print(_login.data);
+  //     final _userInfo = await _dio.get(
+  //       '${_apiUrl}/user',
+  //       options: Options(
+  //         headers: {'Authorization': 'Bearer ${_storage.read('token')}'},
+  //       ),
+  //     );
+  //     _storage.write('id', _userInfo.data['data']['user']['id']);
+  //     _storage.write('email', _userInfo.data['data']['user']['email']);
+  //     _storage.write('name', _userInfo.data['data']['user']['name']);
+  //     print(_storage.read('id'));
+  //     print(_storage.read('email'));
+  //     print(_storage.read('name'));
+  //     Navigator.pop(context);
+  //     Navigator.pushReplacementNamed(context, '/home');
+  //   } on DioException catch (e) {
+  //     print('${e.response} - ${e.response?.statusCode}');
+  //   }
+  // }
 }

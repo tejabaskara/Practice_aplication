@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:dio/dio.dart';
-import 'package:get_storage/get_storage.dart';
+import 'package:tugas_login/dataSource/api.dart';
 
 class loginPage extends StatefulWidget {
   const loginPage({super.key});
@@ -16,10 +15,6 @@ class _loginPageState extends State<loginPage> {
 
   bool isChecked = false;
   bool isVisible = false;
-
-  final _dio = Dio();
-  final _storage = GetStorage();
-  final _apiUrl = 'https://mobileapis.manpits.xyz/api';
 
   void dispose() {
     emailController.dispose();
@@ -52,7 +47,6 @@ class _loginPageState extends State<loginPage> {
             child: Center(
                 child: SizedBox(
                     width: 276,
-                    // height: 40,
                     child: TextFormField(
                       controller: emailController,
                       decoration: InputDecoration(
@@ -110,12 +104,6 @@ class _loginPageState extends State<loginPage> {
                               : Icon(Icons.visibility_off)),
                         ),
                       ),
-                      // validator: (value) {
-                      //   if (value == null || value.isEmpty) {
-                      //     return 'Please enter your password';
-                      //   }
-                      //   return null;
-                      // },
                     )))),
         Row(children: [
           Padding(
@@ -144,10 +132,6 @@ class _loginPageState extends State<loginPage> {
             child: TextButton(
                 onPressed: () {
                   Navigator.pushNamed(context, '/register');
-                  // Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //         builder: (context) => const registerPage()));
                 },
                 child: Text(
                   "Don't have an Account ?",
@@ -157,27 +141,15 @@ class _loginPageState extends State<loginPage> {
                       fontSize: 12,
                     ),
                   ),
-                )
-                // Text(
-                //   "Don't have an Account ?",
-                //   style: GoogleFonts.inter(
-                //     textStyle: TextStyle(
-                //       color: Color(0xff40B5AE),
-                //       fontSize: 12,
-                //     ),
-                //   ),
-                // )
-                ),
+                )),
           )
         ]),
         Padding(
             padding: EdgeInsets.only(top: 30),
             child: ElevatedButton(
               onPressed: () {
-                goLogin();
-
-                // Navigator.of(context).pushReplacement(
-                //     MaterialPageRoute(builder: (context) => const homePage()));
+                loginUser(
+                    emailController.text, passwordController.text, context);
               },
               child: Text(
                 "LOGIN",
@@ -198,37 +170,6 @@ class _loginPageState extends State<loginPage> {
             ))
       ])
     ]));
-  }
-
-  void goLogin() async {
-    try {
-      final _response = await _dio.post(
-        '${_apiUrl}/login',
-        data: {
-          'email': emailController.text,
-          'password': passwordController.text
-        },
-      );
-      print(_response.data);
-      _storage.write('token', _response.data['data']['token']);
-      final _userInfo = await _dio.get(
-        '${_apiUrl}/user',
-        options: Options(
-          headers: {'Authorization': 'Bearer ${_storage.read('token')}'},
-        ),
-      );
-      print(_response.data);
-      _storage.write('id', _userInfo.data['data']['user']['id']);
-      _storage.write('email', _userInfo.data['data']['user']['email']);
-      _storage.write('name', _userInfo.data['data']['user']['name']);
-      print(_storage.read('id'));
-      print(_storage.read('email'));
-      print(_storage.read('name'));
-      Navigator.pop(context);
-      Navigator.pushReplacementNamed(context, '/home');
-    } on DioException catch (e) {
-      print('${e.response} - ${e.response?.statusCode}');
-    }
   }
 
   Padding imageTop() {

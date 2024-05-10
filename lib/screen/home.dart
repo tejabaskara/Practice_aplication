@@ -21,8 +21,6 @@ class _homePageState extends State<homePage> {
           IconButton(
               onPressed: () {
                 Navigator.pushNamed(context, '/profile');
-                // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                //     content: Text('This section is under development!')));
               },
               icon: Icon(
                 Icons.account_circle,
@@ -103,118 +101,6 @@ class _homePageState extends State<homePage> {
                       ],
                     )),
               ),
-              // Container(
-              //   margin: EdgeInsets.only(top: 40, left: 20, right: 20),
-              //   decoration: BoxDecoration(boxShadow: [
-              //     BoxShadow(
-              //         color: Color(0xff101617).withOpacity(0.11),
-              //         blurRadius: 40,
-              //         spreadRadius: 0.0)
-              //   ]),
-              //   child: TextField(
-              //     decoration: InputDecoration(
-              //         filled: true,
-              //         fillColor: Colors.white,
-              //         contentPadding: EdgeInsets.all(15),
-              //         hintText: 'What your insterest?',
-              //         hintStyle:
-              //             TextStyle(color: Color(0xffDDDADA), fontSize: 14),
-              //         prefixIcon: Icon(Icons.search),
-              //         border: OutlineInputBorder(
-              //             borderRadius: BorderRadius.circular(15),
-              //             borderSide: BorderSide.none)),
-              //   ),
-              // ),
-              // Row(
-              //   children: [
-              //     Padding(
-              //         padding: EdgeInsets.only(left: 20, top: 20),
-              //         child: Container(
-              //             width: 70,
-              //             height: 35,
-              //             decoration: BoxDecoration(
-              //               color: Color(0xff8FFF74),
-              //               borderRadius: BorderRadius.circular(10),
-              //             ),
-              //             child: Center(
-              //               child: Text(
-              //                 "Android",
-              //                 style: GoogleFonts.poppins(
-              //                   textStyle: TextStyle(
-              //                     color: Colors.black,
-              //                     fontSize: 12,
-              //                   ),
-              //                 ),
-              //                 textAlign: TextAlign.center,
-              //               ),
-              //             ))),
-              //     Padding(
-              //         padding: EdgeInsets.only(left: 20, top: 20),
-              //         child: Container(
-              //             width: 70,
-              //             height: 35,
-              //             decoration: BoxDecoration(
-              //               color: Color(0xff8FFF74),
-              //               borderRadius: BorderRadius.circular(10),
-              //             ),
-              //             child: Center(
-              //               child: Text(
-              //                 "Cooking",
-              //                 style: GoogleFonts.poppins(
-              //                   textStyle: TextStyle(
-              //                     color: Colors.black,
-              //                     fontSize: 12,
-              //                   ),
-              //                 ),
-              //                 textAlign: TextAlign.center,
-              //               ),
-              //             ))),
-              //     Padding(
-              //         padding: EdgeInsets.only(left: 20, top: 20),
-              //         child: Container(
-              //             width: 70,
-              //             height: 35,
-              //             decoration: BoxDecoration(
-              //               color: Color(0xff8FFF74),
-              //               borderRadius: BorderRadius.circular(10),
-              //             ),
-              //             child: Center(
-              //               child: Text(
-              //                 "Bussiness",
-              //                 style: GoogleFonts.poppins(
-              //                   textStyle: TextStyle(
-              //                     color: Colors.black,
-              //                     fontSize: 12,
-              //                   ),
-              //                 ),
-              //                 textAlign: TextAlign.center,
-              //               ),
-              //             ))),
-              //     Padding(
-              //         padding: EdgeInsets.only(left: 20, top: 20),
-              //         child: Container(
-              //             width: 70,
-              //             height: 35,
-              //             decoration: BoxDecoration(
-              //               color: Color(0xff8FFF74),
-              //               borderRadius: BorderRadius.circular(10),
-              //             ),
-              //             child: Center(
-              //               child: Text(
-              //                 "Design",
-              //                 style: GoogleFonts.poppins(
-              //                   textStyle: TextStyle(
-              //                     color: Colors.black,
-              //                     fontSize: 12,
-              //                   ),
-              //                 ),
-              //                 textAlign: TextAlign.center,
-              //               ),
-              //             ))),
-              //   ],
-              // ),
-              // courseBox("Course 1", "4.5"),
-              // courseBox("Course 2", "3.0"),
             ],
           )
         ],

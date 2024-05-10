@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:tugas_login/anggota.dart';
-import 'package:tugas_login/home.dart';
-import 'package:tugas_login/landing.dart';
-import 'package:tugas_login/login.dart';
-import 'package:tugas_login/profile.dart';
-import 'package:tugas_login/register.dart';
+import 'package:tugas_login/screen/anggota.dart';
+import 'package:tugas_login/screen/home.dart';
+import 'package:tugas_login/screen/landing.dart';
+import 'package:tugas_login/screen/login.dart';
+import 'package:tugas_login/screen/profile.dart';
+import 'package:tugas_login/screen/register.dart';
 import 'package:get_storage/get_storage.dart';
 
 Future<void> main() async {
