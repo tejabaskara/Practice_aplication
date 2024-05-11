@@ -66,7 +66,7 @@ void loginUser(email, password, context) async {
   }
 }
 
-void getAnggota() async {
+Future<void> getAnggota() async {
   try {
     int count = 0;
     final _response = await _dio.get(
@@ -93,8 +93,67 @@ void getAnggota() async {
       print(_storage.read('nama_${count}'));
       print(_storage.read('alamat_${count}'));
     }
-    _storage.write('index', count);
-    print(_storage.read('index'));
+    _storage.write('banyak_anggota', count);
+    print(_storage.read('banyak_anggota'));
+  } on DioException catch (e) {
+    print('${e.response} - ${e.response?.statusCode}');
+  }
+}
+
+void getEditAnggotaDetail(context, id) async {
+  try {
+    final _response = await _dio.get(
+      '${_apiUrl}/anggota/${id}',
+      options: Options(
+        headers: {'Authorization': 'Bearer ${_storage.read('token')}'},
+      ),
+    );
+    _storage.write('anggotaId', _response.data['data']['anggota']['id']);
+    _storage.write('anggota_nomor_induk',
+        _response.data['data']['anggota']['nomor_induk']);
+    _storage.write(
+        'anggota_telepon', _response.data['data']['anggota']['telepon']);
+    _storage.write('anggota_status_aktif',
+        _response.data['data']['anggota']['status_aktif']);
+    _storage.write('anggota_nama', _response.data['data']['anggota']['nama']);
+    _storage.write(
+        'anggota_alamat', _response.data['data']['anggota']['alamat']);
+    _storage.write(
+        'anggota_tgl_lahir', _response.data['data']['anggota']['tgl_lahir']);
+    Navigator.pushNamed(context, '/editAnggota');
+  } on DioException catch (e) {
+    print('${e.response} - ${e.response?.statusCode}');
+  }
+}
+
+void editAnggota(context, id, nomer_induk, telepon, status_aktif, nama, alamat,
+    tgl_lahir) async {
+  print('editAnggota');
+  print('id: ${id}');
+  print('nomer_induk: ${nomer_induk}');
+  print('telepon: ${telepon}');
+  print('status_aktif: ${status_aktif}');
+  print('nama: ${nama}');
+  print('alamat: ${alamat}');
+  print('tgl_lahir: ${tgl_lahir}');
+  try {
+    final _response = await _dio.put(
+      '${_apiUrl}/anggota/${id}',
+      data: {
+        'nomor_induk': nomer_induk,
+        'nama': nama,
+        'alamat': alamat,
+        'tgl_lahir': tgl_lahir,
+        'telepon': telepon,
+        'status_aktif': status_aktif,
+      },
+      options: Options(
+        headers: {'Authorization': 'Bearer ${_storage.read('token')}'},
+      ),
+    );
+    print(_response.data);
+    Navigator.pop(context);
+    Navigator.pushReplacementNamed(context, '/anggota');
   } on DioException catch (e) {
     print('${e.response} - ${e.response?.statusCode}');
   }

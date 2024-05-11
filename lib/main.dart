@@ -5,6 +5,7 @@ import 'package:tugas_login/screen/landing.dart';
 import 'package:tugas_login/screen/login.dart';
 import 'package:tugas_login/screen/profile.dart';
 import 'package:tugas_login/screen/register.dart';
+import 'package:tugas_login/screen/editAnggota.dart';
 import 'package:get_storage/get_storage.dart';
 
 Future<void> main() async {
@@ -24,7 +25,8 @@ class MyApp extends StatelessWidget {
         '/login': (context) => const loginPage(),
         '/home': (context) => const homePage(),
         '/profile': (context) => const profilePage(),
-        '/anggota': (context) => const anggotaPage(),
+        '/anggota': (context) => anggotaPage(),
+        '/editAnggota': (context) => editAnggotaPage(),
       },
       initialRoute: '/',
       // home: page1(),
