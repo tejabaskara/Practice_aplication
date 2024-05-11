@@ -126,6 +126,38 @@ void getEditAnggotaDetail(context, id) async {
   }
 }
 
+void createAnggota(context, nomer_induk, telepon, status_aktif, nama, alamat,
+    tgl_lahir) async {
+  print('createAnggota');
+  print('nomer_induk: ${nomer_induk}');
+  print('telepon: ${telepon}');
+  print('status_aktif: ${status_aktif}');
+  print('nama: ${nama}');
+  print('alamat: ${alamat}');
+  print('tgl_lahir: ${tgl_lahir}');
+  try {
+    final _response = await _dio.post(
+      '${_apiUrl}/anggota',
+      data: {
+        'nomor_induk': nomer_induk,
+        'nama': nama,
+        'alamat': alamat,
+        'tgl_lahir': tgl_lahir,
+        'telepon': telepon,
+        'status_aktif': status_aktif,
+      },
+      options: Options(
+        headers: {'Authorization': 'Bearer ${_storage.read('token')}'},
+      ),
+    );
+    print(_response.data);
+    Navigator.pop(context);
+    Navigator.pushReplacementNamed(context, '/anggota');
+  } on DioException catch (e) {
+    print('${e.response} - ${e.response?.statusCode}');
+  }
+}
+
 void editAnggota(context, id, nomer_induk, telepon, status_aktif, nama, alamat,
     tgl_lahir) async {
   print('editAnggota');
@@ -147,6 +179,22 @@ void editAnggota(context, id, nomer_induk, telepon, status_aktif, nama, alamat,
         'telepon': telepon,
         'status_aktif': status_aktif,
       },
+      options: Options(
+        headers: {'Authorization': 'Bearer ${_storage.read('token')}'},
+      ),
+    );
+    print(_response.data);
+    Navigator.pop(context);
+    Navigator.pushReplacementNamed(context, '/anggota');
+  } on DioException catch (e) {
+    print('${e.response} - ${e.response?.statusCode}');
+  }
+}
+
+void deleteUser(context, id) async {
+  try {
+    final _response = await _dio.delete(
+      '${_apiUrl}/anggota/${id}',
       options: Options(
         headers: {'Authorization': 'Bearer ${_storage.read('token')}'},
       ),

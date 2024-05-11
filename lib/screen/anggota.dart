@@ -14,6 +14,14 @@ class anggotaPage extends StatelessWidget {
                 style: TextStyle(
                     color: Colors.black, fontWeight: FontWeight.bold))),
         backgroundColor: const Color(0xffcfe17c),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () {
+              Navigator.pushNamed(context, '/createAnggota');
+            },
+          ),
+        ],
       ),
       body: FutureBuilder(
         future: getAnggota(),
@@ -62,7 +70,8 @@ class anggotaPage extends StatelessWidget {
                               getEditAnggotaDetail(
                                   context, _storage.read('id_${index + 1}'));
                             } else if (value == 'Delete') {
-                              print('Delete');
+                              deleteUser(
+                                  context, _storage.read('id_${index + 1}'));
                             } else if (value == 'Detail') {
                               showDialog(
                                 context: context,
