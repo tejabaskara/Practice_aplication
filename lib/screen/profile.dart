@@ -151,7 +151,32 @@ class _profilePageState extends State<profilePage> {
                         padding: EdgeInsets.only(top: 30),
                         child: ElevatedButton.icon(
                             onPressed: () {
-                              logoutUser(context);
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () {
+                                              logoutUser(context);
+                                            },
+                                            child: const Text('ya'),
+                                          ),
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: const Text('tidak'),
+                                          )
+                                        ],
+                                        contentPadding: EdgeInsets.all(20.0),
+                                        content: Text(
+                                          'Apakah anda yakin?',
+                                          style: GoogleFonts.poppins(
+                                              textStyle: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 20)),
+                                        ),
+                                      ));
                             },
                             icon: Icon(
                               Icons.logout,

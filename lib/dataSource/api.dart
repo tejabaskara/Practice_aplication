@@ -6,6 +6,7 @@ final _dio = Dio();
 final _storage = GetStorage();
 final _apiUrl = 'https://mobileapis.manpits.xyz/api';
 
+// untuk register user
 void registerUser(name, email, password, context) async {
   try {
     final _register = await _dio.post(
@@ -38,6 +39,7 @@ void registerUser(name, email, password, context) async {
   }
 }
 
+//untuk login user
 void loginUser(email, password, context) async {
   try {
     final _response = await _dio.post(
@@ -66,6 +68,7 @@ void loginUser(email, password, context) async {
   }
 }
 
+//untuk mendapatkan data anggota dari API
 Future<void> getAnggota() async {
   try {
     int count = 0;
@@ -100,6 +103,7 @@ Future<void> getAnggota() async {
   }
 }
 
+//untuk mendapatkan data anggota dari API dan digunakan pada saat edit anggota
 void getEditAnggotaDetail(context, id) async {
   try {
     final _response = await _dio.get(
@@ -126,6 +130,7 @@ void getEditAnggotaDetail(context, id) async {
   }
 }
 
+//untuk membuat anggota baru
 void createAnggota(context, nomer_induk, telepon, status_aktif, nama, alamat,
     tgl_lahir) async {
   print('createAnggota');
@@ -158,6 +163,7 @@ void createAnggota(context, nomer_induk, telepon, status_aktif, nama, alamat,
   }
 }
 
+//untuk mengirim data yang telah diedit ke API
 void editAnggota(context, id, nomer_induk, telepon, status_aktif, nama, alamat,
     tgl_lahir) async {
   print('editAnggota');
@@ -191,6 +197,7 @@ void editAnggota(context, id, nomer_induk, telepon, status_aktif, nama, alamat,
   }
 }
 
+//untuk menghapus anggota
 void deleteUser(context, id) async {
   try {
     final _response = await _dio.delete(
@@ -207,6 +214,7 @@ void deleteUser(context, id) async {
   }
 }
 
+//untuk logout
 void logoutUser(context) async {
   try {
     final _response = await _dio.get(

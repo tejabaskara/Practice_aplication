@@ -37,7 +37,7 @@ class _registerPageState extends State<createAnggotaPage> {
     return Scaffold(
         appBar: AppBar(
           title: const Center(
-              child: Text("EDIT ANGGOTA",
+              child: Text("TAMBAH ANGGOTA",
                   style: TextStyle(
                       color: Colors.black, fontWeight: FontWeight.bold))),
           backgroundColor: const Color(0xffcfe17c),
@@ -72,10 +72,10 @@ class _registerPageState extends State<createAnggotaPage> {
                             print(nomerIndukController.text);
                           },
                         )))),
-            formInput('nama', namaController),
-            formInput('alamat', alamatController),
-            formInput('tglLahir', tglLahirController),
-            formInput('telepon', teleponController),
+            formInput('Nama', namaController),
+            formInput('Alamat', alamatController),
+            formInput('Tanggal Lahir', tglLahirController),
+            formInput('Nomer Telepon', teleponController),
             Padding(
               padding: EdgeInsets.only(top: 20),
               child: DropdownButton<int>(

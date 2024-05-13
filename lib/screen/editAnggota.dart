@@ -45,16 +45,16 @@ class _registerPageState extends State<editAnggotaPage> {
         body: ListView(children: [
           Column(children: [
             formInput(
-              'nama',
+              'Nama',
               namaController,
               _storage.read('anggota_nama'),
             ),
             formInput(
-                'alamat', alamatController, _storage.read('anggota_alamat')),
-            formInput('tglLahir', tglLahirController,
+                'Alamat', alamatController, _storage.read('anggota_alamat')),
+            formInput('Tanggal Lahir', tglLahirController,
                 _storage.read('anggota_tgl_lahir')),
-            formInput(
-                'telepon', teleponController, _storage.read('anggota_telepon')),
+            formInput('Nomer Telepon', teleponController,
+                _storage.read('anggota_telepon')),
             Padding(
               padding: EdgeInsets.only(top: 20),
               child: DropdownButton<int>(
