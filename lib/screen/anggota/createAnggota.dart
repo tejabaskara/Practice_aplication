@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tugas_login/dataSource/anggota.dart';
-import 'package:get_storage/get_storage.dart';
 
 class createAnggotaPage extends StatefulWidget {
   const createAnggotaPage({super.key});
@@ -11,8 +10,6 @@ class createAnggotaPage extends StatefulWidget {
 }
 
 class _registerPageState extends State<createAnggotaPage> {
-  final _storage = GetStorage();
-
   final nomerIndukController = TextEditingController();
   final namaController = TextEditingController();
   final alamatController = TextEditingController();

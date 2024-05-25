@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:tugas_login/dataSource/tabungan.dart';
 
 final _dio = Dio();
 final _storage = GetStorage();
@@ -28,14 +29,18 @@ Future<void> getAnggota() async {
       _storage.write('alamat_${count}', anggota['alamat']);
       _storage.write('tgl_lahir_${count}', anggota['tgl_lahir']);
       _storage.write('image_url_${count}', anggota['image_url']);
+      _storage.write('saldo_${count}', _storage.read('saldo'));
 
-      print(_storage.read('id_${count}'));
-      print(_storage.read('nomor_induk_${count}'));
-      print(_storage.read('nama_${count}'));
-      print(_storage.read('alamat_${count}'));
+      // print(_storage.read('id_${count}'));
+      // print(_storage.read('nomor_induk_${count}'));
+      // print(_storage.read('nama_${count}'));
+      // print(_storage.read('alamat_${count}'));
+      // print(_storage.read('saldo_${anggota['id']}'));
+      // print(count);
     }
     _storage.write('banyak_anggota', count);
     print(_storage.read('banyak_anggota'));
+    // iterationSaldo();
   } on DioException catch (e) {
     print('${e.response} - ${e.response?.statusCode}');
   }

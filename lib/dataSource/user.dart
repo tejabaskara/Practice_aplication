@@ -35,6 +35,20 @@ void registerUser(name, email, password, context) async {
     Navigator.pop(context);
     Navigator.pushReplacementNamed(context, '/home');
   } on DioException catch (e) {
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('close'),
+                ),
+              ],
+              title: const Text('Error'),
+              content: Text('${e.response?.data['message']}'),
+            ));
     print('${e.response} - ${e.response?.statusCode}');
   }
 }
@@ -64,6 +78,20 @@ void loginUser(email, password, context) async {
     Navigator.pop(context);
     Navigator.pushReplacementNamed(context, '/home');
   } on DioException catch (e) {
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('close'),
+                ),
+              ],
+              title: const Text('Error'),
+              content: Text('${e.response?.data['message']}'),
+            ));
     print('${e.response} - ${e.response?.statusCode}');
   }
 }
