@@ -61,7 +61,12 @@ class tabunganPage extends StatelessWidget {
                             'Rp ${_storage.read('saldo_${_storage.read('id_${index + 1}')}')}'),
                         trailing: IconButton(
                           icon: Icon(Icons.info_outline_rounded),
-                          onPressed: () {},
+                          onPressed: () {
+                            getAnggotaDetail(_storage.read('id_${index + 1}'));
+                            print(
+                                'id anggota: ${_storage.read('id_${index + 1}')}');
+                            Navigator.pushNamed(context, '/detailTabungan');
+                          },
                         ),
                       ));
                 },
