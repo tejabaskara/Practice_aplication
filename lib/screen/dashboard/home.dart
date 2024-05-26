@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:tugas_login/dataSource/tabungan.dart';
 
 class homePage extends StatefulWidget {
   const homePage({super.key});
@@ -208,6 +209,10 @@ class _homePageState extends State<homePage> {
         icon: Icon(Icons.person),
         label: 'List Anggota',
       ),
+      BottomNavigationBarItem(
+        icon: Icon(Icons.money),
+        label: 'List Tabungan',
+      ),
     ], selectedItemColor: Colors.amber, onTap: _onTap);
   }
 
@@ -218,6 +223,11 @@ class _homePageState extends State<homePage> {
         break;
       case 1:
         Navigator.pushNamed(context, "/anggota");
+        break;
+      case 2:
+        getBanyakAnggota();
+        iterationSaldo();
+        Navigator.pushNamed(context, "/tabungan");
         break;
     }
   }

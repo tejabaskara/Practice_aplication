@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:tugas_login/dataSource/api.dart';
+import 'package:tugas_login/dataSource/user.dart';
 
 class profilePage extends StatefulWidget {
   const profilePage({super.key});

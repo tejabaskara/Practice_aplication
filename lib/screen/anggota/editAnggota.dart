@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tugas_login/dataSource/api.dart';
+import 'package:tugas_login/dataSource/anggota.dart';
 import 'package:get_storage/get_storage.dart';
 
-class createAnggotaPage extends StatefulWidget {
-  const createAnggotaPage({super.key});
+class editAnggotaPage extends StatefulWidget {
+  const editAnggotaPage({super.key});
 
   @override
-  State<createAnggotaPage> createState() => _registerPageState();
+  State<editAnggotaPage> createState() => _registerPageState();
 }
 
-class _registerPageState extends State<createAnggotaPage> {
+class _registerPageState extends State<editAnggotaPage> {
   final _storage = GetStorage();
 
-  final nomerIndukController = TextEditingController();
+  // final nomerIndukController = TextEditingController();
   final namaController = TextEditingController();
   final alamatController = TextEditingController();
   final tglLahirController = TextEditingController();
@@ -24,7 +24,7 @@ class _registerPageState extends State<createAnggotaPage> {
   bool isVisibleConfirm = false;
 
   void dispose() {
-    nomerIndukController.dispose();
+    // nomerIndukController.dispose();
     namaController.dispose();
     alamatController.dispose();
     tglLahirController.dispose();
@@ -37,45 +37,24 @@ class _registerPageState extends State<createAnggotaPage> {
     return Scaffold(
         appBar: AppBar(
           title: const Center(
-              child: Text("TAMBAH ANGGOTA",
+              child: Text("EDIT ANGGOTA",
                   style: TextStyle(
                       color: Colors.black, fontWeight: FontWeight.bold))),
           backgroundColor: const Color(0xffcfe17c),
         ),
         body: ListView(children: [
           Column(children: [
-            Padding(
-                padding: EdgeInsets.only(top: 20),
-                child: Center(
-                    child: SizedBox(
-                        width: 276,
-                        child: TextField(
-                          controller: nomerIndukController,
-                          keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'Nomer Induk',
-                            fillColor: Color(0xffD9D9D9),
-                            filled: true,
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide:
-                                  BorderSide(color: Colors.blueGrey, width: 1),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide:
-                                  BorderSide(color: Colors.red, width: 1),
-                            ),
-                          ),
-                          onChanged: (value) {
-                            print(nomerIndukController.text);
-                          },
-                        )))),
-            formInput('Nama', namaController),
-            formInput('Alamat', alamatController),
-            formInput('Tanggal Lahir', tglLahirController),
-            formInput('Nomer Telepon', teleponController),
+            formInput(
+              'Nama',
+              namaController,
+              _storage.read('anggota_nama'),
+            ),
+            formInput(
+                'Alamat', alamatController, _storage.read('anggota_alamat')),
+            formInput('Tanggal Lahir', tglLahirController,
+                _storage.read('anggota_tgl_lahir')),
+            formInput('Nomer Telepon', teleponController,
+                _storage.read('anggota_telepon')),
             Padding(
               padding: EdgeInsets.only(top: 20),
               child: DropdownButton<int>(
@@ -103,9 +82,10 @@ class _registerPageState extends State<createAnggotaPage> {
                 padding: EdgeInsets.only(top: 10, bottom: 50),
                 child: ElevatedButton(
                   onPressed: () {
-                    createAnggota(
+                    editAnggota(
                         context,
-                        int.parse(nomerIndukController.text),
+                        _storage.read('anggotaId'),
+                        _storage.read('anggota_nomor_induk'),
                         teleponController.text,
                         status_aktif,
                         namaController.text,
@@ -134,7 +114,8 @@ class _registerPageState extends State<createAnggotaPage> {
   }
 }
 
-Widget formInput(String label, TextEditingController controller) {
+Widget formInput(String label, TextEditingController controller, data) {
+  controller.text = data;
   return Padding(
       padding: EdgeInsets.only(top: 20),
       child: Center(
