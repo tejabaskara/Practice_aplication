@@ -1,11 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:tugas_login/component/showAlertDialog.dart';
 import 'package:tugas_login/dataSource/tabungan.dart';
 
 final _dio = Dio();
 final _storage = GetStorage();
 final _apiUrl = 'https://mobileapis.manpits.xyz/api';
+
+Future<List<Map<String, dynamic>>> getAllAnggota(BuildContext context) async {
+  List<Map<String, dynamic>> anggotas = [];
+  try {
+    final _response = await _dio.get(
+      '${_apiUrl}/anggota',
+      options: Options(
+        headers: {'Authorization': 'Bearer ${_storage.read('token')}'},
+      ),
+    );
+    for (var anggota in _response.data['data']['anggotas']) {
+      anggotas.add({
+        'id': anggota['id'],
+        'nomor_induk': anggota['nomor_induk'],
+        'telepon': anggota['telepon'],
+        'status_aktif': anggota['status_aktif'],
+        'nama': anggota['nama'],
+        'alamat': anggota['alamat'],
+        'tgl_lahir': anggota['tgl_lahir'],
+        'image_url': anggota['image_url'],
+        'saldo': await getSaldo(anggota['id']),
+      });
+    }
+    return anggotas;
+  } on DioException catch (e) {
+    if (e.response!.statusCode! < 500) {
+      showAlertDialog(context, "Error",
+          "Terjadi kesalahan saat mendapatkan data members, coba ulang");
+    } else {
+      showAlertDialog(context, "Error", "Internal Server Error");
+    }
+    print('${e.response} - ${e.response?.statusCode}');
+    return anggotas;
+  }
+}
 
 //untuk mendapatkan data anggota dari API
 Future<void> getAnggota() async {

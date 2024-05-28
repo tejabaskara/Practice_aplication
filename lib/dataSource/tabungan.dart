@@ -28,7 +28,9 @@ void getBanyakAnggota() async {
   }
 }
 
-void getSaldo(id) async {
+Future<int> getSaldo(id) async {
+  int saldo = 0;
+
   try {
     final _response = await _dio.get(
       '${_apiUrl}/saldo/${id}',
@@ -38,8 +40,11 @@ void getSaldo(id) async {
     );
     _storage.write('saldo_${id}', _response.data['data']['saldo']);
     print(_storage.read('saldo_${id}'));
+    saldo = _response.data['data']['saldo'];
+    return saldo;
   } on DioException catch (e) {
     print('${e.response} - ${e.response?.statusCode}');
+    return saldo;
   }
 }
 
