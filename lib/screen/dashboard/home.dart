@@ -65,40 +65,40 @@ class _homePageState extends State<homePage> {
                             ),
                           ],
                         ),
-                        Row(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(top: 20),
-                              child: Text(
-                                "Balances :",
-                                style: GoogleFonts.poppins(
-                                  textStyle: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 20,
-                                  ),
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Icon(Icons.currency_pound_rounded,
-                                color: Colors.green),
-                            Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "999.999.999",
-                                style: GoogleFonts.poppins(
-                                  textStyle: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 20,
-                                  ),
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
+                        // Row(
+                        //   children: [
+                        //     Padding(
+                        //       padding: EdgeInsets.only(top: 20),
+                        //       child: Text(
+                        //         "Balances :",
+                        //         style: GoogleFonts.poppins(
+                        //           textStyle: TextStyle(
+                        //             color: Colors.black,
+                        //             fontSize: 20,
+                        //           ),
+                        //         ),
+                        //       ),
+                        //     )
+                        //   ],
+                        // ),
+                        // Row(
+                        //   children: [
+                        //     Icon(Icons.currency_pound_rounded,
+                        //         color: Colors.green),
+                        //     Padding(
+                        //       padding: EdgeInsets.only(left: 10),
+                        //       child: Text(
+                        //         "999.999.999",
+                        //         style: GoogleFonts.poppins(
+                        //           textStyle: TextStyle(
+                        //             color: Colors.black,
+                        //             fontSize: 20,
+                        //           ),
+                        //         ),
+                        //       ),
+                        //     )
+                        //   ],
+                        // ),
                       ],
                     )),
               ),
