@@ -21,14 +21,6 @@ class tabunganPage extends StatelessWidget {
             child: Text("Tabungan Anggota",
                 style: TextStyle(
                     color: Colors.black, fontWeight: FontWeight.bold))),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () {
-              Navigator.pushNamed(context, '/createAnggota');
-            },
-          ),
-        ],
       ),
       body: FutureBuilder(
         future: getAnggota(),

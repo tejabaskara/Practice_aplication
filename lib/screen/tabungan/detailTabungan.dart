@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:tugas_login/dataSource/anggota.dart';
 import 'package:tugas_login/dataSource/tabungan.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:tugas_login/screen/tabungan/addTabungan.dart';
 
 class detailTabunganPage extends StatefulWidget {
   const detailTabunganPage({super.key});
@@ -18,7 +19,25 @@ class _detailTabunganState extends State<detailTabunganPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Detail Tabungan'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+            Navigator.pushReplacementNamed(context, '/tabungan');
+          },
+        ),
+        title: const Center(
+            child: Text("Detail Tabungan Anggota",
+                style: TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.bold))),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: () {
+              Navigator.pushNamed(context, '/addTabungan');
+            },
+          ),
+        ],
       ),
       body: Column(children: [
         Container(
