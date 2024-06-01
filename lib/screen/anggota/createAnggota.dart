@@ -15,6 +15,7 @@ class _registerPageState extends State<createAnggotaPage> {
   final alamatController = TextEditingController();
   final tglLahirController = TextEditingController();
   final teleponController = TextEditingController();
+  final saldoController = TextEditingController();
   int status_aktif = 1;
 
   bool isVisible = false;
@@ -96,18 +97,20 @@ class _registerPageState extends State<createAnggotaPage> {
                 },
               ),
             ),
+            formInput('Saldo', saldoController),
             Padding(
                 padding: EdgeInsets.only(top: 10, bottom: 50),
                 child: ElevatedButton(
                   onPressed: () {
                     createAnggota(
-                        context,
-                        int.parse(nomerIndukController.text),
-                        teleponController.text,
+                        nomerIndukController,
+                        teleponController,
                         status_aktif,
-                        namaController.text,
-                        alamatController.text,
-                        tglLahirController.text);
+                        namaController,
+                        alamatController,
+                        tglLahirController,
+                        saldoController,
+                        context);
                   },
                   child: Text(
                     "SUBMIT",

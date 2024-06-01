@@ -95,7 +95,27 @@ void addTabungan(
     _storage.remove('saldo_${id}');
     getSaldo(id);
     Navigator.pop(context);
-    Navigator.pushReplacementNamed(context, "/tabungan");
+    Navigator.pushReplacementNamed(context, "/home");
+  } on DioException catch (e) {
+    print('error: ${e.response} - ${e.response?.statusCode}');
+  }
+}
+
+void addSaldoAwal(
+    String id, String trx_id, String trx_nominal, BuildContext context) async {
+  try {
+    final _response = await _dio.post(
+      '${_apiUrl}/tabungan',
+      data: {'anggota_id': id, 'trx_id': trx_id, 'trx_nominal': trx_nominal},
+      options: Options(
+        headers: {'Authorization': 'Bearer ${_storage.read('token')}'},
+      ),
+    );
+    print(_response);
+    _storage.remove('saldo_${id}');
+    getSaldo(id);
+    Navigator.pop(context);
+    Navigator.pushReplacementNamed(context, "/home");
   } on DioException catch (e) {
     print('error: ${e.response} - ${e.response?.statusCode}');
   }

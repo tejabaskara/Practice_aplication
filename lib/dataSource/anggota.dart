@@ -111,8 +111,77 @@ void getEditAnggotaDetail(context, id) async {
   }
 }
 
+Future<void> createAnggota(
+    TextEditingController formNomerInduk,
+    TextEditingController formTelepon,
+    int statusAktif,
+    TextEditingController formNama,
+    TextEditingController formAlamat,
+    TextEditingController formTglLahir,
+    TextEditingController formSaldo,
+    BuildContext context) async {
+  if (formNomerInduk.text.isEmpty ||
+      formTelepon.text.isEmpty ||
+      formNama.text.isEmpty ||
+      formAlamat.text.isEmpty ||
+      formTglLahir.text.isEmpty) {
+    showAlertDialog(context, "Error", "Harap mengisi setiap kolom data anda");
+    return;
+  }
+
+  try {
+    final _anggotas = ValueNotifier<List<Map<String, dynamic>>>([]);
+    final anggotas = await getAllAnggota(context);
+    _anggotas.value = anggotas;
+
+    for (var anggota in anggotas) {
+      if (anggota['nomor_induk'] == int.parse(formNomerInduk.text)) {
+        showAlertDialog(context, "Error",
+            "Anggota dengan nomor induk ${formNomerInduk.text} sudah ada");
+        return;
+      }
+    }
+
+    final _response = await _dio.post(
+      '${_apiUrl}/anggota',
+      data: {
+        'nomor_induk': int.parse(formNomerInduk.text),
+        'nama': formNama.text,
+        'alamat': formAlamat.text,
+        'tgl_lahir': formTglLahir.text,
+        'telepon': formTelepon.text,
+        'status_aktif': statusAktif,
+      },
+      options: Options(
+        headers: {'Authorization': 'Bearer ${_storage.read('token')}'},
+      ),
+    );
+    if (!_response.data['success']) {
+      showAlertDialog(context, "Error", "${_response.data['message']}");
+      return;
+    }
+
+    final _newAnggotas = ValueNotifier<List<Map<String, dynamic>>>([]);
+    final newAnggotas = await getAllAnggota(context);
+    _newAnggotas.value = newAnggotas;
+
+    for (var newAnggota in newAnggotas) {
+      if (newAnggota['nomor_induk'] == int.parse(formNomerInduk.text)) {
+        addSaldoAwal(newAnggota['id'].toString(), "1", formSaldo.text, context);
+        return;
+      }
+    }
+    Navigator.pop(context);
+    Navigator.pushReplacementNamed(context, '/home');
+    return;
+  } on DioException catch (e) {
+    showAlertDialog(context, "Error", "something went wrong");
+    return;
+  }
+}
+
 //untuk membuat anggota baru
-void createAnggota(context, nomer_induk, telepon, status_aktif, nama, alamat,
+void createAnggota1(context, nomer_induk, telepon, status_aktif, nama, alamat,
     tgl_lahir) async {
   print('createAnggota');
   print('nomer_induk: ${nomer_induk}');
