@@ -10,6 +10,7 @@ final _apiUrl = 'https://mobileapis.manpits.xyz/api';
 
 Future<List<Map<String, dynamic>>> getAllAnggota(BuildContext context) async {
   List<Map<String, dynamic>> anggotas = [];
+  print("masuk getAllAnggota");
   try {
     final _response = await _dio.get(
       '${_apiUrl}/anggota',
@@ -29,6 +30,7 @@ Future<List<Map<String, dynamic>>> getAllAnggota(BuildContext context) async {
         'image_url': anggota['image_url'],
         'saldo': await getSaldo(anggota['id']),
       });
+      print('id: ${anggota['id']}');
     }
     return anggotas;
   } on DioException catch (e) {
