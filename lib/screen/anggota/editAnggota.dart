@@ -4,7 +4,8 @@ import 'package:tugas_login/dataSource/anggota.dart';
 import 'package:get_storage/get_storage.dart';
 
 class editAnggotaPage extends StatefulWidget {
-  const editAnggotaPage({super.key});
+  final Map<String, dynamic> anggotaDetail;
+  const editAnggotaPage({super.key, required this.anggotaDetail});
 
   @override
   State<editAnggotaPage> createState() => _registerPageState();
@@ -13,7 +14,7 @@ class editAnggotaPage extends StatefulWidget {
 class _registerPageState extends State<editAnggotaPage> {
   final _storage = GetStorage();
 
-  // final nomerIndukController = TextEditingController();
+  final nomerIndukController = TextEditingController();
   final namaController = TextEditingController();
   final alamatController = TextEditingController();
   final tglLahirController = TextEditingController();
@@ -22,15 +23,6 @@ class _registerPageState extends State<editAnggotaPage> {
 
   bool isVisible = false;
   bool isVisibleConfirm = false;
-
-  void dispose() {
-    // nomerIndukController.dispose();
-    namaController.dispose();
-    alamatController.dispose();
-    tglLahirController.dispose();
-    teleponController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,16 +37,30 @@ class _registerPageState extends State<editAnggotaPage> {
         body: ListView(children: [
           Column(children: [
             formInput(
-              'Nama',
-              namaController,
-              _storage.read('anggota_nama'),
+              "Nomer Induk",
+              nomerIndukController,
+              widget.anggotaDetail['nomor_induk'].toString(),
             ),
             formInput(
-                'Alamat', alamatController, _storage.read('anggota_alamat')),
-            formInput('Tanggal Lahir', tglLahirController,
-                _storage.read('anggota_tgl_lahir')),
-            formInput('Nomer Telepon', teleponController,
-                _storage.read('anggota_telepon')),
+              'Nama',
+              namaController,
+              widget.anggotaDetail['nama'],
+            ),
+            formInput(
+              'Alamat',
+              alamatController,
+              widget.anggotaDetail['alamat'],
+            ),
+            formInput(
+              'Tanggal Lahir',
+              tglLahirController,
+              widget.anggotaDetail['tgl_lahir'],
+            ),
+            formInput(
+              'Nomer Telepon',
+              teleponController,
+              widget.anggotaDetail['telepon'],
+            ),
             Padding(
               padding: EdgeInsets.only(top: 20),
               child: DropdownButton<int>(
@@ -83,14 +89,14 @@ class _registerPageState extends State<editAnggotaPage> {
                 child: ElevatedButton(
                   onPressed: () {
                     editAnggota(
-                        context,
-                        _storage.read('anggotaId'),
-                        _storage.read('anggota_nomor_induk'),
-                        teleponController.text,
+                        widget.anggotaDetail['id'].toString(),
+                        nomerIndukController,
+                        teleponController,
                         status_aktif,
-                        namaController.text,
-                        alamatController.text,
-                        tglLahirController.text);
+                        namaController,
+                        alamatController,
+                        tglLahirController,
+                        context);
                   },
                   child: Text(
                     "SUBMIT",

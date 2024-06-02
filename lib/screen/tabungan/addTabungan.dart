@@ -5,8 +5,8 @@ import 'package:tugas_login/dataSource/tabungan.dart';
 import 'package:get_storage/get_storage.dart';
 
 class addTabunganPage extends StatefulWidget {
-  // final String anggotaId;
-  const addTabunganPage({super.key});
+  final Map<String, dynamic> anggotaDetail;
+  const addTabunganPage({super.key, required this.anggotaDetail});
 
   @override
   State<addTabunganPage> createState() => _registerPageState();
@@ -20,10 +20,25 @@ class _registerPageState extends State<addTabunganPage> {
 
   int jenis_trx = 1;
 
-  void dispose() {
-    nominalTrxController.dispose();
-    jenisTrxController.dispose();
-    super.dispose();
+  final _trxType = ValueNotifier<List<Map<String, dynamic>>>([]);
+  @override
+  void initState() {
+    super.initState();
+    _fetchTrxType();
+  }
+
+  Future<void> _fetchTrxType() async {
+    final trxType = await getTrxType(context);
+    _trxType.value = trxType;
+  }
+
+  String _getTrxTypeName(int id) {
+    List<Map<String, dynamic>> trxTypeList = _trxType.value;
+    if (trxTypeList.isNotEmpty && id >= 1 && id <= trxTypeList.length) {
+      return trxTypeList[id - 1]['trx_name'];
+    } else {
+      return 'Transaksi';
+    }
   }
 
   @override
@@ -88,11 +103,8 @@ class _registerPageState extends State<addTabunganPage> {
                 padding: EdgeInsets.only(top: 10, bottom: 50),
                 child: ElevatedButton(
                   onPressed: () {
-                    addTabungan(
-                        _storage.read('anggotaId').toString(),
-                        jenis_trx.toString(),
-                        nominalTrxController.text.toString(),
-                        context);
+                    addTabungan(widget.anggotaDetail, jenis_trx,
+                        nominalTrxController, context);
                   },
                   child: Text(
                     "TAMBAH",

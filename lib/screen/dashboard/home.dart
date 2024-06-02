@@ -5,6 +5,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:tugas_login/component/format.dart';
 import 'package:tugas_login/component/text.dart';
 import 'package:tugas_login/dataSource/anggota.dart';
+import 'package:tugas_login/screen/anggota/detailAnggota.dart';
 
 class homePage extends StatefulWidget {
   const homePage({super.key});
@@ -151,7 +152,13 @@ class _homePageState extends State<homePage> {
                                 alignment: Alignment.center,
                                 child: GestureDetector(
                                   onTap: () {
-                                    Navigator.pushNamed(context, '/home');
+                                    Navigator.push(context, MaterialPageRoute(
+                                      builder: (context) {
+                                        return detailAnggotaPage(
+                                          anggotaDetail: anggota,
+                                        );
+                                      },
+                                    ));
                                   },
                                   child: Container(
                                     width:

@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:tugas_login/component/showAlertDialog.dart';
 import 'package:tugas_login/dataSource/tabungan.dart';
+import 'package:tugas_login/screen/anggota/detailAnggota.dart';
 
 final _dio = Dio();
 final _storage = GetStorage();
@@ -10,7 +11,7 @@ final _apiUrl = 'https://mobileapis.manpits.xyz/api';
 
 Future<List<Map<String, dynamic>>> getAllAnggota(BuildContext context) async {
   List<Map<String, dynamic>> anggotas = [];
-  print("masuk getAllAnggota");
+  // print("masuk getAllAnggota");
   try {
     final _response = await _dio.get(
       '${_apiUrl}/anggota',
@@ -79,33 +80,6 @@ Future<void> getAnggota() async {
     _storage.write('banyak_anggota', count);
     print(_storage.read('banyak_anggota'));
     // iterationSaldo();
-  } on DioException catch (e) {
-    print('${e.response} - ${e.response?.statusCode}');
-  }
-}
-
-//untuk mendapatkan data anggota dari API dan digunakan pada saat edit anggota
-void getEditAnggotaDetail(context, id) async {
-  try {
-    final _response = await _dio.get(
-      '${_apiUrl}/anggota/${id}',
-      options: Options(
-        headers: {'Authorization': 'Bearer ${_storage.read('token')}'},
-      ),
-    );
-    _storage.write('anggotaId', _response.data['data']['anggota']['id']);
-    _storage.write('anggota_nomor_induk',
-        _response.data['data']['anggota']['nomor_induk']);
-    _storage.write(
-        'anggota_telepon', _response.data['data']['anggota']['telepon']);
-    _storage.write('anggota_status_aktif',
-        _response.data['data']['anggota']['status_aktif']);
-    _storage.write('anggota_nama', _response.data['data']['anggota']['nama']);
-    _storage.write(
-        'anggota_alamat', _response.data['data']['anggota']['alamat']);
-    _storage.write(
-        'anggota_tgl_lahir', _response.data['data']['anggota']['tgl_lahir']);
-    Navigator.pushNamed(context, '/editAnggota');
   } on DioException catch (e) {
     print('${e.response} - ${e.response?.statusCode}');
   }
@@ -180,41 +154,92 @@ Future<void> createAnggota(
   }
 }
 
-//untuk membuat anggota baru
-void createAnggota1(context, nomer_induk, telepon, status_aktif, nama, alamat,
-    tgl_lahir) async {
-  print('createAnggota');
-  print('nomer_induk: ${nomer_induk}');
-  print('telepon: ${telepon}');
-  print('status_aktif: ${status_aktif}');
-  print('nama: ${nama}');
-  print('alamat: ${alamat}');
-  print('tgl_lahir: ${tgl_lahir}');
+Future<void> editAnggota(
+    String id,
+    TextEditingController formNomerInduk,
+    TextEditingController formTelepon,
+    int statusAktif,
+    TextEditingController formNama,
+    TextEditingController formAlamat,
+    TextEditingController formTglLahir,
+    BuildContext context) async {
+  if (formNomerInduk.text.isEmpty ||
+      formTelepon.text.isEmpty ||
+      formNama.text.isEmpty ||
+      formAlamat.text.isEmpty ||
+      formTglLahir.text.isEmpty) {
+    showAlertDialog(context, "Error", "Harap mengisi setiap kolom data anda");
+    return;
+  }
+
   try {
-    final _response = await _dio.post(
-      '${_apiUrl}/anggota',
+    print('code 1');
+    print(int.parse(formNomerInduk.text));
+    print(formNama.text);
+    print(formAlamat.text);
+    print(formTglLahir.text);
+    print(formTelepon.text);
+    print(statusAktif);
+    final _response = await _dio.put(
+      '${_apiUrl}/anggota/${id}',
       data: {
-        'nomor_induk': nomer_induk,
-        'nama': nama,
-        'alamat': alamat,
-        'tgl_lahir': tgl_lahir,
-        'telepon': telepon,
-        'status_aktif': status_aktif,
+        'nomor_induk': int.parse(formNomerInduk.text),
+        'nama': formNama.text,
+        'alamat': formAlamat.text,
+        'tgl_lahir': formTglLahir.text,
+        'telepon': formTelepon.text,
+        'status_aktif': statusAktif,
       },
       options: Options(
         headers: {'Authorization': 'Bearer ${_storage.read('token')}'},
       ),
     );
-    print(_response.data);
+    print('code 2');
+    if (!_response.data['success']) {
+      showAlertDialog(context, "Error", "${_response.data['message']}");
+      return;
+    }
+
+    final anggota = Map<String, dynamic>();
+    final _responseAnggota = await _dio.get(
+      '${_apiUrl}/anggota/${id}',
+      options: Options(
+        headers: {'Authorization': 'Bearer ${_storage.read('token')}'},
+      ),
+    );
+    print('code 3');
+
+    print(_responseAnggota);
+
+    anggota['id'] = _responseAnggota.data['data']['anggota']['id'];
+    anggota['nomor_induk'] =
+        _responseAnggota.data['data']['anggota']['nomor_induk'];
+    anggota['telepon'] = _responseAnggota.data['data']['anggota']['telepon'];
+    anggota['status_aktif'] =
+        _responseAnggota.data['data']['anggota']['status_aktif'];
+    anggota['nama'] = _responseAnggota.data['data']['anggota']['nama'];
+    anggota['alamat'] = _responseAnggota.data['data']['anggota']['alamat'];
+    anggota['tgl_lahir'] =
+        _responseAnggota.data['data']['anggota']['tgl_lahir'];
+    anggota['saldo'] = await getSaldo(anggota['id']);
+
     Navigator.pop(context);
-    Navigator.pushReplacementNamed(context, '/anggota');
+    Navigator.push(context, MaterialPageRoute(
+      builder: (context) {
+        return detailAnggotaPage(
+          anggotaDetail: anggota,
+        );
+      },
+    ));
+    return;
   } on DioException catch (e) {
-    print('${e.response} - ${e.response?.statusCode}');
+    showAlertDialog(context, "Error", "something went wrong");
+    return;
   }
 }
 
 //untuk mengirim data yang telah diedit ke API
-void editAnggota(context, id, nomer_induk, telepon, status_aktif, nama, alamat,
+void editAnggota1(context, id, nomer_induk, telepon, status_aktif, nama, alamat,
     tgl_lahir) async {
   print('editAnggota');
   print('id: ${id}');
@@ -258,9 +283,9 @@ void deleteUser(context, id) async {
     );
     print(_response.data);
     Navigator.pop(context);
-    Navigator.pushReplacementNamed(context, '/anggota');
+    Navigator.pushReplacementNamed(context, '/home');
   } on DioException catch (e) {
-    print('${e.response} - ${e.response?.statusCode}');
+    showAlertDialog(context, "Error", "something went wrong");
   }
 }
 

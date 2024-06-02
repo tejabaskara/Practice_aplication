@@ -85,7 +85,7 @@ class anggotaPage extends StatelessWidget {
             ],
             onSelected: (value) {
               if (value == 'Edit') {
-                getEditAnggotaDetail(context, _storage.read('id_${index + 1}'));
+                print("Edit");
               } else if (value == 'Delete') {
                 showDialog(
                     context: context,
