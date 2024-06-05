@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:tugas_login/component/dialogBox.dart';
 import 'package:tugas_login/dataSource/user.dart';
 
 class profilePage extends StatefulWidget {
@@ -151,32 +152,10 @@ class _profilePageState extends State<profilePage> {
                         padding: EdgeInsets.only(top: 30),
                         child: ElevatedButton.icon(
                             onPressed: () {
-                              showDialog(
-                                  context: context,
-                                  builder: (context) => AlertDialog(
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () {
-                                              logoutUser(context);
-                                            },
-                                            child: const Text('ya'),
-                                          ),
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.of(context).pop();
-                                            },
-                                            child: const Text('tidak'),
-                                          )
-                                        ],
-                                        contentPadding: EdgeInsets.all(20.0),
-                                        content: Text(
-                                          'Apakah anda yakin?',
-                                          style: GoogleFonts.poppins(
-                                              textStyle: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 20)),
-                                        ),
-                                      ));
+                              showReminderDialog(context, "Konfirmasi Logout",
+                                  "Apakah anda yakin ingin Logout?", () {
+                                logoutUser(context);
+                              });
                             },
                             icon: Icon(
                               Icons.logout,

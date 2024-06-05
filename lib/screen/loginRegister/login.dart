@@ -148,8 +148,7 @@ class _loginPageState extends State<loginPage> {
             padding: EdgeInsets.only(top: 30),
             child: ElevatedButton(
               onPressed: () {
-                loginUser(
-                    emailController.text, passwordController.text, context);
+                loginUser(emailController, passwordController, context);
               },
               child: Text(
                 "LOGIN",

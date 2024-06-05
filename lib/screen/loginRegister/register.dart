@@ -199,8 +199,8 @@ class _registerPageState extends State<registerPage> {
             padding: EdgeInsets.only(top: 10, bottom: 50),
             child: ElevatedButton(
               onPressed: () {
-                registerUser(nameController.text, emailController.text,
-                    passwordController.text, context);
+                registerUser(nameController, emailController,
+                    passwordController, confirmPasswordController, context);
                 // Navigator.of(context).pushReplacement(
                 //     MaterialPageRoute(builder: (context) => const homePage()));
               },
