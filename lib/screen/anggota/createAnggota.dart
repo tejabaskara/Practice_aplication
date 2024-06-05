@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:tugas_login/dataSource/anggota.dart';
 
 class createAnggotaPage extends StatefulWidget {
@@ -72,7 +73,7 @@ class _registerPageState extends State<createAnggotaPage> {
                         )))),
             formInput('Nama', namaController),
             formInput('Alamat', alamatController),
-            formInput('Tanggal Lahir', tglLahirController),
+            datePicker('Tanggal Lahir', tglLahirController, context),
             formInput('Nomer Telepon', teleponController),
             Padding(
               padding: EdgeInsets.only(top: 20),
@@ -134,30 +135,72 @@ class _registerPageState extends State<createAnggotaPage> {
   }
 }
 
-Widget formInput(String label, TextEditingController controller) {
+Widget formInput(String label, TextEditingController controller,
+    {bool isDatePicker = false}) {
   return Padding(
       padding: EdgeInsets.only(top: 20),
       child: Center(
           child: SizedBox(
-              width: 276,
-              child: TextField(
-                controller: controller,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: label,
-                  fillColor: Color(0xffD9D9D9),
-                  filled: true,
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(color: Colors.blueGrey, width: 1),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(color: Colors.red, width: 1),
-                  ),
-                ),
-                onChanged: (value) {
-                  print(controller.text);
-                },
-              ))));
+        width: 276,
+        child: TextField(
+          controller: controller,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: label,
+            fillColor: Color(0xffD9D9D9),
+            filled: true,
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: Colors.blueGrey, width: 1),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: Colors.red, width: 1),
+            ),
+          ),
+          onChanged: (value) {
+            print(controller.text);
+          },
+        ),
+      )));
+}
+
+Widget datePicker(
+    String label, TextEditingController controller, BuildContext context) {
+  return Padding(
+      padding: EdgeInsets.only(top: 20),
+      child: Center(
+          child: SizedBox(
+        width: 276,
+        child: TextField(
+          controller: controller,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: label,
+            fillColor: Color(0xffD9D9D9),
+            filled: true,
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: Colors.blueGrey, width: 1),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: Colors.red, width: 1),
+            ),
+          ),
+          onTap: () {
+            showDatePicker(
+              context: context,
+              initialDate: DateTime.now(),
+              firstDate: DateTime(1900),
+              lastDate: DateTime(2025),
+            ).then((date) {
+              if (date != null) {
+                String formattedDate = DateFormat('yyyy-MM-dd').format(date);
+                controller.text = formattedDate;
+              }
+            });
+          },
+        ),
+      )));
 }

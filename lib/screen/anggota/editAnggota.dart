@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:tugas_login/dataSource/anggota.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -51,11 +52,8 @@ class _registerPageState extends State<editAnggotaPage> {
               alamatController,
               widget.anggotaDetail['alamat'],
             ),
-            formInput(
-              'Tanggal Lahir',
-              tglLahirController,
-              widget.anggotaDetail['tgl_lahir'],
-            ),
+            datePicker('Tanggal Lahir', tglLahirController,
+                widget.anggotaDetail['tgl_lahir'], context),
             formInput(
               'Nomer Telepon',
               teleponController,
@@ -147,4 +145,48 @@ Widget formInput(String label, TextEditingController controller, data) {
                   print(controller.text);
                 },
               ))));
+}
+
+Widget datePicker(String label, TextEditingController controller, String date,
+    BuildContext context) {
+  controller.text = date;
+  DateTime dataTtl = DateFormat('yyyy-MM-dd').parse(date);
+
+  return Padding(
+      padding: EdgeInsets.only(top: 20),
+      child: Center(
+          child: SizedBox(
+        width: 276,
+        child: TextField(
+          controller: controller,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: label,
+            fillColor: Color(0xffD9D9D9),
+            filled: true,
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: Colors.blueGrey, width: 1),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: Colors.red, width: 1),
+            ),
+          ),
+          readOnly: true,
+          onTap: () {
+            showDatePicker(
+              context: context,
+              initialDate: dataTtl,
+              firstDate: DateTime(1900),
+              lastDate: DateTime(2025),
+            ).then((date) {
+              if (date != null) {
+                String formattedDate = DateFormat('yyyy-MM-dd').format(date);
+                controller.text = formattedDate;
+              }
+            });
+          },
+        ),
+      )));
 }

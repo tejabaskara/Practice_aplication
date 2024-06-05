@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:tugas_login/component/showAlertDialog.dart';
+import 'package:tugas_login/component/dialogBox.dart';
 import 'package:tugas_login/screen/anggota/detailAnggota.dart';
 
 final _dio = Dio();

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tugas_login/component/dialogBox.dart';
 import 'package:tugas_login/component/format.dart';
 import 'package:tugas_login/component/text.dart';
 import 'package:tugas_login/dataSource/anggota.dart';
@@ -90,7 +91,7 @@ class _detailTabunganState extends State<detailAnggotaPage> {
       ),
       body: Column(children: [
         Container(
-          height: 130,
+          height: 200,
           width: double.infinity,
           decoration: BoxDecoration(
             color: Color(0xffD9D9D9),
@@ -111,6 +112,11 @@ class _detailTabunganState extends State<detailAnggotaPage> {
                     textStyle(widget.anggotaDetail['telepon'], 18),
                     SizedBox(height: 5),
                     textStyle(widget.anggotaDetail['alamat'], 18),
+                    SizedBox(height: 5),
+                    textStyle(
+                        widget.anggotaDetail['nomor_induk'].toString(), 18),
+                    SizedBox(height: 5),
+                    textStyle(widget.anggotaDetail['tgl_lahir'], 18),
                   ],
                 ),
               ),
@@ -204,8 +210,11 @@ class _detailTabunganState extends State<detailAnggotaPage> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      deleteUser(
-                          context, widget.anggotaDetail['id'].toString());
+                      showReminderDialog(context, "Hapus Anggota",
+                          "Apakah anda yakin ingin menghapus anggota?", () {
+                        deleteUser(
+                            context, widget.anggotaDetail['id'].toString());
+                      });
                     },
                     child: Container(
                       padding:
