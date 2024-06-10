@@ -65,6 +65,7 @@ class _detailTabunganState extends State<detailAnggotaPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color(0xffACE1AF),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -94,7 +95,7 @@ class _detailTabunganState extends State<detailAnggotaPage> {
           height: 200,
           width: double.infinity,
           decoration: BoxDecoration(
-            color: Color(0xffD9D9D9),
+            color: Color(0xffB0EBB4),
             borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(20),
                 bottomRight: Radius.circular(20)),
@@ -134,7 +135,7 @@ class _detailTabunganState extends State<detailAnggotaPage> {
                       padding:
                           EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                       decoration: BoxDecoration(
-                        color: Color(0xffFFFFFF),
+                        color: Color(0xffACE1AF),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Row(

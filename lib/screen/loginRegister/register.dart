@@ -64,7 +64,7 @@ class _registerPageState extends State<registerPage> {
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.red, width: 1),
+                          borderSide: BorderSide(color: Colors.black, width: 1),
                         ),
                       ),
                       onChanged: (value) {
@@ -90,7 +90,7 @@ class _registerPageState extends State<registerPage> {
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.red, width: 1),
+                          borderSide: BorderSide(color: Colors.black, width: 1),
                         ),
                       ),
                       onChanged: (value) {
@@ -117,7 +117,8 @@ class _registerPageState extends State<registerPage> {
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(color: Colors.red, width: 1),
+                            borderSide:
+                                BorderSide(color: Colors.black, width: 1),
                           ),
                           suffixIcon: IconButton(
                             onPressed: () {
@@ -150,7 +151,8 @@ class _registerPageState extends State<registerPage> {
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(color: Colors.red, width: 1),
+                            borderSide:
+                                BorderSide(color: Colors.black, width: 1),
                           ),
                           suffixIcon: IconButton(
                             onPressed: () {
@@ -169,10 +171,6 @@ class _registerPageState extends State<registerPage> {
             child: TextButton(
                 onPressed: () {
                   Navigator.pushNamed(context, '/login');
-                  // Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //         builder: (context) => const loginPage()));
                 },
                 child: Text(
                   "Already have an Account ?",
@@ -182,17 +180,7 @@ class _registerPageState extends State<registerPage> {
                       fontSize: 12,
                     ),
                   ),
-                )
-                // Text(
-                //   "Do have an Account ?",
-                //   style: GoogleFonts.inter(
-                //     textStyle: TextStyle(
-                //       color: Color(0xff40B5AE),
-                //       fontSize: 12,
-                //     ),
-                //   ),
-                // )
-                ),
+                )),
           )
         ]),
         Padding(
@@ -201,8 +189,6 @@ class _registerPageState extends State<registerPage> {
               onPressed: () {
                 registerUser(nameController, emailController,
                     passwordController, confirmPasswordController, context);
-                // Navigator.of(context).pushReplacement(
-                //     MaterialPageRoute(builder: (context) => const homePage()));
               },
               child: Text(
                 "REGISTER",
@@ -218,7 +204,7 @@ class _registerPageState extends State<registerPage> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  backgroundColor: Color(0xff8FFF74),
+                  backgroundColor: Color(0xffBFF6C3),
                   foregroundColor: Colors.black),
             ))
       ])
@@ -233,7 +219,6 @@ class _registerPageState extends State<registerPage> {
           width: 280,
           height: 190,
           decoration: BoxDecoration(
-            // color: Color(0xffD9D9D9),
             image: DecorationImage(
               image: AssetImage('assets/images/register_image.jpg'),
               fit: BoxFit.fitHeight,
@@ -241,43 +226,4 @@ class _registerPageState extends State<registerPage> {
           ),
         )));
   }
-
-  // void goRegister() async {
-  //   try {
-  //     final _register = await _dio.post(
-  //       '${_apiUrl}/register',
-  //       data: {
-  //         'name': nameController.text,
-  //         'email': emailController.text,
-  //         'password': passwordController.text
-  //       },
-  //     );
-  //     final _login = await _dio.post(
-  //       '${_apiUrl}/login',
-  //       data: {
-  //         'email': emailController.text,
-  //         'password': passwordController.text
-  //       },
-  //     );
-  //     _storage.write('token', _login.data['data']['token']);
-  //     print(_register.data);
-  //     print(_login.data);
-  //     final _userInfo = await _dio.get(
-  //       '${_apiUrl}/user',
-  //       options: Options(
-  //         headers: {'Authorization': 'Bearer ${_storage.read('token')}'},
-  //       ),
-  //     );
-  //     _storage.write('id', _userInfo.data['data']['user']['id']);
-  //     _storage.write('email', _userInfo.data['data']['user']['email']);
-  //     _storage.write('name', _userInfo.data['data']['user']['name']);
-  //     print(_storage.read('id'));
-  //     print(_storage.read('email'));
-  //     print(_storage.read('name'));
-  //     Navigator.pop(context);
-  //     Navigator.pushReplacementNamed(context, '/home');
-  //   } on DioException catch (e) {
-  //     print('${e.response} - ${e.response?.statusCode}');
-  //   }
-  // }
 }

@@ -51,7 +51,7 @@ class _homePageState extends State<homePage> {
                 width: double.infinity,
                 height: 110,
                 decoration: BoxDecoration(
-                  color: Color(0xfffbe7c9),
+                  color: Color(0xffB0EBB4),
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(30),
                     bottomRight: Radius.circular(30),
@@ -87,7 +87,7 @@ class _homePageState extends State<homePage> {
                       width: 150,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xffD9D9D9),
+                          backgroundColor: Color(0xffB0EBB4),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
@@ -123,6 +123,11 @@ class _homePageState extends State<homePage> {
                           ),
                           filled: true,
                           fillColor: Color(0xfff0f0f0),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide:
+                                BorderSide(color: Color(0xffB0EBB4), width: 1),
+                          ),
                         ),
                       ),
                     ),
@@ -164,7 +169,7 @@ class _homePageState extends State<homePage> {
                                     width:
                                         MediaQuery.of(context).size.width * 0.9,
                                     decoration: BoxDecoration(
-                                      color: Color(0xffD9D9D9),
+                                      color: Color(0xffE0FBE2),
                                       borderRadius: BorderRadius.circular(30),
                                     ),
                                     child: Padding(
@@ -213,7 +218,7 @@ class _homePageState extends State<homePage> {
                                                       horizontal: 10,
                                                       vertical: 5),
                                                   decoration: BoxDecoration(
-                                                    color: Color(0xffFFFFFF),
+                                                    color: Color(0xffACE1AF),
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             20),
@@ -273,6 +278,7 @@ class _homePageState extends State<homePage> {
         ),
       ],
       selectedItemColor: Colors.blue,
+      backgroundColor: Color(0xffBFF6C3),
       onTap: _onTap,
     );
   }
