@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tugas_login/dataSource/anggota.dart';
 import 'package:tugas_login/dataSource/tabungan.dart';
-import 'package:get_storage/get_storage.dart';
+import 'package:tugas_login/screen/anggota/detailAnggota.dart';
 
 class addTabunganPage extends StatefulWidget {
   final Map<String, dynamic> anggotaDetail;
@@ -16,29 +15,11 @@ class _registerPageState extends State<addTabunganPage> {
   final nominalTrxController = TextEditingController();
   final jenisTrxController = TextEditingController();
 
-  final _storage = GetStorage();
+  int jenis_trx = 2;
 
-  int jenis_trx = 1;
-
-  final _trxType = ValueNotifier<List<Map<String, dynamic>>>([]);
   @override
   void initState() {
     super.initState();
-    _fetchTrxType();
-  }
-
-  Future<void> _fetchTrxType() async {
-    final trxType = await getTrxType(context);
-    _trxType.value = trxType;
-  }
-
-  String _getTrxTypeName(int id) {
-    List<Map<String, dynamic>> trxTypeList = _trxType.value;
-    if (trxTypeList.isNotEmpty && id >= 1 && id <= trxTypeList.length) {
-      return trxTypeList[id - 1]['trx_name'];
-    } else {
-      return 'Transaksi';
-    }
   }
 
   @override
@@ -49,21 +30,20 @@ class _registerPageState extends State<addTabunganPage> {
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
               Navigator.pop(context);
-              Navigator.pushReplacementNamed(context, '/home');
+              Navigator.push(context, MaterialPageRoute(
+                builder: (context) {
+                  return detailAnggotaPage(
+                    anggotaDetail: widget.anggotaDetail,
+                  );
+                },
+              ));
             },
           ),
+          backgroundColor: Color(0xffACE1AF),
           title: const Center(
               child: Text("Tabungan Anggota",
                   style: TextStyle(
                       color: Colors.black, fontWeight: FontWeight.bold))),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.add),
-              onPressed: () {
-                Navigator.pushNamed(context, '/createAnggota');
-              },
-            ),
-          ],
         ),
         body: ListView(children: [
           Column(children: [
@@ -73,20 +53,12 @@ class _registerPageState extends State<addTabunganPage> {
                 value: jenis_trx,
                 items: [
                   DropdownMenuItem<int>(
-                    child: Text("Saldo Awal"),
-                    value: 1,
-                  ),
-                  DropdownMenuItem<int>(
                     child: Text("Simpanan"),
                     value: 2,
                   ),
                   DropdownMenuItem<int>(
                     child: Text("Penarikan"),
                     value: 3,
-                  ),
-                  DropdownMenuItem<int>(
-                    child: Text("Bunga Simpanan"),
-                    value: 4,
                   ),
                 ],
                 onChanged: (int? value) {

@@ -39,7 +39,7 @@ class _registerPageState extends State<createAnggotaPage> {
               child: Text("TAMBAH ANGGOTA",
                   style: TextStyle(
                       color: Colors.black, fontWeight: FontWeight.bold))),
-          backgroundColor: const Color(0xffcfe17c),
+          backgroundColor: const Color(0xffACE1AF),
         ),
         body: ListView(children: [
           Column(children: [

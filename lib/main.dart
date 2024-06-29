@@ -9,7 +9,6 @@ import 'package:tugas_login/screen/anggota/editAnggota.dart';
 import 'package:tugas_login/screen/anggota/createAnggota.dart';
 import 'package:tugas_login/screen/tabungan/addTabungan.dart';
 import 'package:tugas_login/screen/anggota/detailAnggota.dart';
-import 'package:tugas_login/screen/tabungan/tabungan.dart';
 import 'package:get_storage/get_storage.dart';
 
 Future<void> main() async {
@@ -31,10 +30,8 @@ class MyApp extends StatelessWidget {
         '/profile': (context) => const profilePage(),
         '/anggota': (context) => anggotaPage(),
         '/createAnggota': (context) => createAnggotaPage(),
-        '/tabungan': (context) => tabunganPage(),
       },
       initialRoute: '/',
-      // home: page1(),
       debugShowCheckedModeBanner: false,
     );
   }

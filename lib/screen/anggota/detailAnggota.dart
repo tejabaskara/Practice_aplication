@@ -26,8 +26,8 @@ class _detailTabunganState extends State<detailAnggotaPage> {
   @override
   void initState() {
     super.initState();
-    _fetchTrxHistories();
     _fetchTrxType();
+    _fetchTrxHistories();
   }
 
   Future<void> _fetchTrxType() async {
@@ -52,14 +52,12 @@ class _detailTabunganState extends State<detailAnggotaPage> {
 
   String _getTrxTypeName(int id) {
     List<Map<String, dynamic>> trxTypeList = _trxType.value;
-    if (trxTypeList.isNotEmpty && id >= 1 && id <= trxTypeList.length) {
+    if (trxTypeList.isNotEmpty && id > 0 && id <= trxTypeList.length) {
       return trxTypeList[id - 1]['trx_name'];
     } else {
       return 'Transaksi';
     }
   }
-
-  // final _storage = GetStorage();
 
   @override
   Widget build(BuildContext context) {
@@ -269,7 +267,7 @@ class _detailTabunganState extends State<detailAnggotaPage> {
                       return SingleChildScrollView(
                         child: ListView.separated(
                           separatorBuilder: (context, index) => const SizedBox(
-                            height: 10,
+                            height: 20,
                           ),
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
@@ -279,9 +277,6 @@ class _detailTabunganState extends State<detailAnggotaPage> {
                             return Align(
                               alignment: Alignment.center,
                               child: GestureDetector(
-                                onTap: () {
-                                  Navigator.pushNamed(context, '/home');
-                                },
                                 child: Card(
                                   color: trx['trx_id'] == 1
                                       ? Colors.white
@@ -291,22 +286,24 @@ class _detailTabunganState extends State<detailAnggotaPage> {
                                               ? Colors.red
                                               : Colors.yellow,
                                   child: ListTile(
-                                    title: trx['trx_id'] == 1
-                                        ? textStyle('Saldo Awal', 11)
-                                        : trx['trx_id'] == 2
-                                            ? textStyle(
-                                                "Simpanan ${trx['id']}", 11)
-                                            : trx['trx_id'] == 3
-                                                ? textStyle(
-                                                    "Penarikan ${trx['id']}",
-                                                    11)
-                                                : textStyle(
-                                                    "Bunga Simpanan ${trx['id']}",
-                                                    11),
+                                    leading: Icon(
+                                      trx['trx_id'] == 1
+                                          ? Icons.account_balance
+                                          : trx['trx_id'] == 2
+                                              ? Icons.add
+                                              : trx['trx_id'] == 3
+                                                  ? Icons.remove
+                                                  : Icons.money,
+                                      color: Colors.black,
+                                    ),
+                                    title:
+                                        // Text(trx['trx_id'].toString()),
+                                        textBoldStyle(
+                                            _getTrxTypeName(trx['trx_id']), 11),
                                     subtitle: textStyle(
                                         CurrencyFormat.convertToIdr(
                                             trx['trx_nominal'], 2),
-                                        11),
+                                        13),
                                     trailing: textStyle(trx['trx_tanggal'], 11),
                                   ),
                                 ),

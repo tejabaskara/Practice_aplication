@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:tugas_login/component/dialogBox.dart';
 import 'package:tugas_login/dataSource/anggota.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -13,8 +14,6 @@ class editAnggotaPage extends StatefulWidget {
 }
 
 class _registerPageState extends State<editAnggotaPage> {
-  final _storage = GetStorage();
-
   final nomerIndukController = TextEditingController();
   final namaController = TextEditingController();
   final alamatController = TextEditingController();
@@ -33,7 +32,7 @@ class _registerPageState extends State<editAnggotaPage> {
               child: Text("EDIT ANGGOTA",
                   style: TextStyle(
                       color: Colors.black, fontWeight: FontWeight.bold))),
-          backgroundColor: const Color(0xffcfe17c),
+          backgroundColor: const Color(0xffACE1AF),
         ),
         body: ListView(children: [
           Column(children: [
@@ -86,15 +85,18 @@ class _registerPageState extends State<editAnggotaPage> {
                 padding: EdgeInsets.only(top: 10, bottom: 50),
                 child: ElevatedButton(
                   onPressed: () {
-                    editAnggota(
-                        widget.anggotaDetail['id'].toString(),
-                        nomerIndukController,
-                        teleponController,
-                        status_aktif,
-                        namaController,
-                        alamatController,
-                        tglLahirController,
-                        context);
+                    showReminderDialog(context, "Edit Anggota",
+                        "Apakah anda yakin ingin mengubah data anggota?", () {
+                      editAnggota(
+                          widget.anggotaDetail['id'].toString(),
+                          nomerIndukController,
+                          teleponController,
+                          status_aktif,
+                          namaController,
+                          alamatController,
+                          tglLahirController,
+                          context);
+                    });
                   },
                   child: Text(
                     "SUBMIT",

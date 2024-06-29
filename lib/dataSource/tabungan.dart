@@ -159,6 +159,5 @@ Future<List<Map<String, dynamic>>> getTrxType(BuildContext context) async {
       showAlertDialog(context, "Error", "Internal Server Error");
     }
   }
-
   return trxType;
 }
