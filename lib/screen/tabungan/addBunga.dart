@@ -1,23 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tugas_login/component/dialogBox.dart';
 import 'package:tugas_login/component/formInput.dart';
 import 'package:tugas_login/dataSource/tabungan.dart';
 import 'package:tugas_login/screen/anggota/detailAnggota.dart';
 
-class addTabunganPage extends StatefulWidget {
-  final Map<String, dynamic> anggotaDetail;
-  const addTabunganPage({super.key, required this.anggotaDetail});
+class addBungaPage extends StatefulWidget {
+  const addBungaPage({super.key});
 
   @override
-  State<addTabunganPage> createState() => _registerPageState();
+  State<addBungaPage> createState() => _addBungaPageState();
 }
 
-class _registerPageState extends State<addTabunganPage> {
-  final nominalTrxController = TextEditingController();
-  final jenisTrxController = TextEditingController();
+class _addBungaPageState extends State<addBungaPage> {
+  final nominalBungaController = TextEditingController();
+  final aktifController = TextEditingController();
 
-  int jenis_trx = 2;
+  int isAktif = 1;
 
   @override
   void initState() {
@@ -32,13 +30,7 @@ class _registerPageState extends State<addTabunganPage> {
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
               Navigator.pop(context);
-              Navigator.push(context, MaterialPageRoute(
-                builder: (context) {
-                  return detailAnggotaPage(
-                    anggotaDetail: widget.anggotaDetail,
-                  );
-                },
-              ));
+              Navigator.pushNamed(context, '/bunga');
             },
           ),
           backgroundColor: Color(0xffACE1AF),
@@ -49,48 +41,35 @@ class _registerPageState extends State<addTabunganPage> {
         ),
         body: ListView(children: [
           Column(children: [
+            formInput('Nominal Bunga(%)', nominalBungaController),
             Padding(
               padding: EdgeInsets.only(top: 20),
               child: DropdownButton<int>(
-                value: jenis_trx,
+                value: isAktif,
                 items: [
                   DropdownMenuItem<int>(
-                    child: Text("Simpanan"),
-                    value: 2,
+                    child: Text("Tidak Aktif"),
+                    value: 0,
                   ),
                   DropdownMenuItem<int>(
-                    child: Text("Penarikan"),
-                    value: 3,
-                  ),
-                  DropdownMenuItem<int>(
-                    child: Text("Koreksi Penambahan"),
-                    value: 5,
-                  ),
-                  DropdownMenuItem<int>(
-                    child: Text("Koreksi Pengurangan"),
-                    value: 6,
+                    child: Text("Aktif"),
+                    value: 1,
                   ),
                 ],
                 onChanged: (int? value) {
                   if (value != null) {
                     setState(() {
-                      jenis_trx = value;
+                      isAktif = value;
                     });
                   }
                 },
               ),
             ),
-            formInput('Nominal (Rp)', nominalTrxController),
             Padding(
                 padding: EdgeInsets.only(top: 10, bottom: 50),
                 child: ElevatedButton(
                   onPressed: () {
-                    showReminderDialog(context, "Transaksi Tabungan",
-                        "Apakah anda yakin ingin menambah transaksi tabungan ?",
-                        () {
-                      addTabungan(widget.anggotaDetail, jenis_trx,
-                          nominalTrxController, context);
-                    });
+                    addBunga(isAktif, nominalBungaController, context);
                   },
                   child: Text(
                     "TAMBAH",

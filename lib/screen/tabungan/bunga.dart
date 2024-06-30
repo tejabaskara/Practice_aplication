@@ -1,37 +1,41 @@
 import 'package:flutter/material.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:tugas_login/component/format.dart';
 import 'package:tugas_login/component/text.dart';
-import 'package:tugas_login/dataSource/anggota.dart';
+import 'package:tugas_login/dataSource/tabungan.dart';
 import 'package:tugas_login/screen/anggota/detailAnggota.dart';
 
-class homePage extends StatefulWidget {
-  const homePage({super.key});
+class bungaPage extends StatefulWidget {
+  const bungaPage({super.key});
 
   @override
-  State<homePage> createState() => _homePageState();
+  State<bungaPage> createState() => _bungaPageState();
 }
 
-class _homePageState extends State<homePage> {
-  final _storage = GetStorage();
-  final _anggotas = ValueNotifier<List<Map<String, dynamic>>>([]);
+class _bungaPageState extends State<bungaPage> {
+  final _bungas = ValueNotifier<List<Map<String, dynamic>>>([]);
   bool _isLoading = false;
+  double _bungaActive = 0.0;
 
-  int _currentIndex = 1;
+  int _currentIndex = 0;
 
   @override
   void initState() {
     super.initState();
-    _fetchAnggota();
+    _fetchBunga();
   }
 
-  Future<void> _fetchAnggota() async {
+  Future<void> _fetchBunga() async {
     setState(() {
       _isLoading = true;
     });
     try {
-      final anggotas = await getAllAnggota(context);
-      _anggotas.value = anggotas;
+      final bungas = await getBunga(context);
+      _bungas.value = bungas;
+      for (var bunga in bungas) {
+        if (bunga['isaktif'] == 1) {
+          _bungaActive = bunga['persen'];
+          print(bunga['persen'].toString());
+        }
+      }
     } finally {
       setState(() {
         _isLoading = false;
@@ -58,18 +62,11 @@ class _homePageState extends State<homePage> {
                   ),
                 ),
                 child: Padding(
-                  padding: EdgeInsets.only(left: 20, top: 40),
+                  padding: EdgeInsets.only(top: 30),
                   child: Column(
                     children: [
-                      SizedBox(height: 10),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20),
-                        child: Row(
-                          children: [
-                            textBoldStyle("Hello, ${_storage.read('name')}", 20)
-                          ],
-                        ),
-                      ),
+                      textBoldStyle("Bunga Aktif", 20),
+                      textBoldStyle("${_bungaActive.toString()} %", 20),
                     ],
                   ),
                 ),
@@ -77,7 +74,7 @@ class _homePageState extends State<homePage> {
               SizedBox(
                 height: 30,
               ),
-              textBoldStyle("List Anggota", 20),
+              textBoldStyle("List bunga", 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -93,7 +90,7 @@ class _homePageState extends State<homePage> {
                           ),
                         ),
                         onPressed: () {
-                          Navigator.pushNamed(context, '/createAnggota');
+                          Navigator.pushNamed(context, '/addBunga');
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -103,31 +100,8 @@ class _homePageState extends State<homePage> {
                               color: Colors.black,
                             ),
                             SizedBox(width: 5),
-                            Flexible(child: textStyle("Tambah Anggota", 11))
+                            Flexible(child: textStyle("Tambah Bunga", 11))
                           ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 31, top: 18),
-                    child: Container(
-                      width: 170,
-                      height: 40,
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Cari nama',
-                          prefixIcon: Icon(Icons.search),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          filled: true,
-                          fillColor: Color(0xfff0f0f0),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide:
-                                BorderSide(color: Color(0xffB0EBB4), width: 1),
-                          ),
                         ),
                       ),
                     ),
@@ -141,8 +115,8 @@ class _homePageState extends State<homePage> {
                 child: _isLoading
                     ? const CircularProgressIndicator()
                     : ValueListenableBuilder<List<Map<String, dynamic>>>(
-                        valueListenable: _anggotas,
-                        builder: (context, anggotas, _) {
+                        valueListenable: _bungas,
+                        builder: (context, bungas, _) {
                           return ListView.separated(
                             separatorBuilder: (context, index) =>
                                 const SizedBox(
@@ -150,9 +124,9 @@ class _homePageState extends State<homePage> {
                             ),
                             shrinkWrap: true,
                             physics: NeverScrollableScrollPhysics(),
-                            itemCount: anggotas.length,
+                            itemCount: bungas.length,
                             itemBuilder: (context, index) {
-                              final anggota = anggotas[index];
+                              final bunga = bungas[index];
                               return Align(
                                 alignment: Alignment.center,
                                 child: GestureDetector(
@@ -160,7 +134,7 @@ class _homePageState extends State<homePage> {
                                     Navigator.push(context, MaterialPageRoute(
                                       builder: (context) {
                                         return detailAnggotaPage(
-                                          anggotaDetail: anggota,
+                                          anggotaDetail: bunga,
                                         );
                                       },
                                     ));
@@ -169,7 +143,9 @@ class _homePageState extends State<homePage> {
                                     width:
                                         MediaQuery.of(context).size.width * 0.9,
                                     decoration: BoxDecoration(
-                                      color: Color(0xffE0FBE2),
+                                      color: bunga['isaktif'] == 1
+                                          ? Colors.blue
+                                          : Color(0xffE0FBE2),
                                       borderRadius: BorderRadius.circular(30),
                                     ),
                                     child: Padding(
@@ -186,62 +162,10 @@ class _homePageState extends State<homePage> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  anggota['nama'],
+                                                  "${bunga['persen'].toString()} %",
                                                   style: TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 16,
-                                                  ),
-                                                ),
-                                                SizedBox(height: 5),
-                                                textStyle(
-                                                    anggota['telepon'], 11),
-                                                SizedBox(height: 5),
-                                                textStyle(
-                                                    anggota['alamat'], 11),
-                                              ],
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                right: 10),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.end,
-                                              children: [
-                                                textBoldStyle(
-                                                    CurrencyFormat.convertToIdr(
-                                                        anggota['saldo'], 2),
-                                                    16),
-                                                SizedBox(height: 5),
-                                                Container(
-                                                  padding: EdgeInsets.symmetric(
-                                                      horizontal: 10,
-                                                      vertical: 5),
-                                                  decoration: BoxDecoration(
-                                                    color: Color(0xffACE1AF),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20),
-                                                  ),
-                                                  child: Row(
-                                                    children: [
-                                                      Icon(
-                                                        Icons.circle,
-                                                        color:
-                                                            anggota['status_aktif'] ==
-                                                                    1
-                                                                ? Colors.green
-                                                                : Colors.red,
-                                                        size: 10,
-                                                      ),
-                                                      SizedBox(width: 5),
-                                                      textStyle(
-                                                          anggota['status_aktif'] ==
-                                                                  1
-                                                              ? 'Aktif'
-                                                              : 'Tidak Aktif',
-                                                          11),
-                                                    ],
                                                   ),
                                                 ),
                                               ],

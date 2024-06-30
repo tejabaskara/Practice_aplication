@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tugas_login/component/dialogBox.dart';
 import 'package:tugas_login/component/format.dart';
 import 'package:tugas_login/component/text.dart';
 import 'package:tugas_login/dataSource/anggota.dart';
 import 'package:tugas_login/dataSource/tabungan.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:tugas_login/screen/anggota/editAnggota.dart';
 import 'package:tugas_login/screen/tabungan/addTabungan.dart';
 
@@ -280,11 +278,14 @@ class _detailTabunganState extends State<detailAnggotaPage> {
                                 child: Card(
                                   color: trx['trx_id'] == 1
                                       ? Colors.white
-                                      : trx['trx_id'] == 2
+                                      : trx['trx_id'] == 2 || trx['trx_id'] == 5
                                           ? Colors.green
-                                          : trx['trx_id'] == 3
+                                          : trx['trx_id'] == 3 ||
+                                                  trx['trx_id'] == 6
                                               ? Colors.red
-                                              : Colors.yellow,
+                                              : trx['trx_id'] == 4
+                                                  ? Colors.blue
+                                                  : Colors.yellow,
                                   child: ListTile(
                                     leading: Icon(
                                       trx['trx_id'] == 1
@@ -293,7 +294,9 @@ class _detailTabunganState extends State<detailAnggotaPage> {
                                               ? Icons.add
                                               : trx['trx_id'] == 3
                                                   ? Icons.remove
-                                                  : Icons.money,
+                                                  : trx['trx_id'] == 4
+                                                      ? Icons.money
+                                                      : Icons.edit,
                                       color: Colors.black,
                                     ),
                                     title:

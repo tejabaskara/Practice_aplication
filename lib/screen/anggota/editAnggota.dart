@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:tugas_login/component/dialogBox.dart';
 import 'package:tugas_login/dataSource/anggota.dart';
-import 'package:get_storage/get_storage.dart';
 
 class editAnggotaPage extends StatefulWidget {
   final Map<String, dynamic> anggotaDetail;

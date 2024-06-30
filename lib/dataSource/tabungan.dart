@@ -161,3 +161,53 @@ Future<List<Map<String, dynamic>>> getTrxType(BuildContext context) async {
   }
   return trxType;
 }
+
+Future<List<Map<String, dynamic>>> getBunga(BuildContext context) async {
+  List<Map<String, dynamic>> bunga = [];
+
+  try {
+    final response = await _dio.get(
+      '$_apiUrl/settingbunga',
+      options: Options(
+        headers: {'Authorization': 'Bearer ${_storage.read('token')}'},
+      ),
+    );
+
+    bunga =
+        List<Map<String, dynamic>>.from(response.data['data']['settingbungas']);
+    return bunga;
+  } on DioException catch (e) {
+    if (e.response!.statusCode! < 500) {
+      showAlertDialog(context, "Error",
+          "Terjadi kesalahan saat mendapatkan data jenis transaksi, coba ulang");
+    } else {
+      showAlertDialog(context, "Error", "Internal Server Error");
+    }
+  }
+  return bunga;
+}
+
+void addBunga(
+  int formIsAktif,
+  TextEditingController formBunga_nominal,
+  BuildContext context,
+) async {
+  try {
+    final _response = await _dio.post(
+      '${_apiUrl}/addsettingbunga',
+      data: {
+        'persen': formBunga_nominal.text,
+        'isaktif': formIsAktif.toString(),
+      },
+      options: Options(
+        headers: {'Authorization': 'Bearer ${_storage.read('token')}'},
+      ),
+    );
+    print(_response);
+    Navigator.pop(context);
+    Navigator.pushNamed(context, '/bunga');
+  } on DioException catch (e) {
+    showAlertDialog(context, "Error", "something went wrong");
+    return;
+  }
+}
