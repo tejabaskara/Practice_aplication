@@ -35,7 +35,9 @@ Future<List<Map<String, dynamic>>> getAllAnggota(BuildContext context) async {
     }
     return anggotas;
   } on DioException catch (e) {
-    if (e.response!.statusCode! < 500) {
+    if (e.response!.statusCode! == 406) {
+      showAlertDialogExpiredToken(context);
+    } else if (e.response!.statusCode! < 500) {
       showAlertDialog(context, "Error",
           "Terjadi kesalahan saat mendapatkan data members, coba ulang");
     } else {
@@ -43,45 +45,6 @@ Future<List<Map<String, dynamic>>> getAllAnggota(BuildContext context) async {
     }
     print('${e.response} - ${e.response?.statusCode}');
     return anggotas;
-  }
-}
-
-//untuk mendapatkan data anggota dari API
-Future<void> getAnggota() async {
-  try {
-    int count = 0;
-    final _response = await _dio.get(
-      '${_apiUrl}/anggota',
-      options: Options(
-        headers: {'Authorization': 'Bearer ${_storage.read('token')}'},
-      ),
-    );
-    _storage.write('anggotas', _response.data['data']['anggotas']);
-    for (var anggota in _response.data['data']['anggotas']) {
-      count += 1;
-
-      _storage.write('id_${count}', anggota['id']);
-      _storage.write('nomor_induk_${count}', anggota['nomor_induk']);
-      _storage.write('telepon_${count}', anggota['telepon']);
-      _storage.write('status_aktif_${count}', anggota['status_aktif']);
-      _storage.write('nama_${count}', anggota['nama']);
-      _storage.write('alamat_${count}', anggota['alamat']);
-      _storage.write('tgl_lahir_${count}', anggota['tgl_lahir']);
-      _storage.write('image_url_${count}', anggota['image_url']);
-      _storage.write('saldo_${count}', _storage.read('saldo'));
-
-      // print(_storage.read('id_${count}'));
-      // print(_storage.read('nomor_induk_${count}'));
-      // print(_storage.read('nama_${count}'));
-      // print(_storage.read('alamat_${count}'));
-      // print(_storage.read('saldo_${anggota['id']}'));
-      // print(count);
-    }
-    _storage.write('banyak_anggota', count);
-    print(_storage.read('banyak_anggota'));
-    // iterationSaldo();
-  } on DioException catch (e) {
-    print('${e.response} - ${e.response?.statusCode}');
   }
 }
 
@@ -149,7 +112,11 @@ Future<void> createAnggota(
     Navigator.pushReplacementNamed(context, '/home');
     return;
   } on DioException catch (e) {
-    showAlertDialog(context, "Error", "something went wrong");
+    if (e.response!.statusCode! == 406) {
+      showAlertDialogExpiredToken(context);
+    } else {
+      showAlertDialog(context, "Error", "something went wrong");
+    }
     return;
   }
 }
@@ -173,13 +140,13 @@ Future<void> editAnggota(
   }
 
   try {
-    print('code 1');
-    print(int.parse(formNomerInduk.text));
-    print(formNama.text);
-    print(formAlamat.text);
-    print(formTglLahir.text);
-    print(formTelepon.text);
-    print(statusAktif);
+    // print('code 1');
+    // print(int.parse(formNomerInduk.text));
+    // print(formNama.text);
+    // print(formAlamat.text);
+    // print(formTglLahir.text);
+    // print(formTelepon.text);
+    // print(statusAktif);
     final _response = await _dio.put(
       '${_apiUrl}/anggota/${id}',
       data: {
@@ -194,7 +161,7 @@ Future<void> editAnggota(
         headers: {'Authorization': 'Bearer ${_storage.read('token')}'},
       ),
     );
-    print('code 2');
+    // print('code 2');
     if (!_response.data['success']) {
       showAlertDialog(context, "Error", "${_response.data['message']}");
       return;
@@ -207,9 +174,9 @@ Future<void> editAnggota(
         headers: {'Authorization': 'Bearer ${_storage.read('token')}'},
       ),
     );
-    print('code 3');
+    // print('code 3');
 
-    print(_responseAnggota);
+    // print(_responseAnggota);
 
     anggota['id'] = _responseAnggota.data['data']['anggota']['id'];
     anggota['nomor_induk'] =
@@ -233,42 +200,13 @@ Future<void> editAnggota(
     ));
     return;
   } on DioException catch (e) {
-    showAlertDialog(context, "Error", "something went wrong");
-    return;
-  }
-}
+    if (e.response!.statusCode! == 406) {
+      showAlertDialogExpiredToken(context);
+    } else {
+      showAlertDialog(context, "Error", "something went wrong");
+    }
 
-//untuk mengirim data yang telah diedit ke API
-void editAnggota1(context, id, nomer_induk, telepon, status_aktif, nama, alamat,
-    tgl_lahir) async {
-  print('editAnggota');
-  print('id: ${id}');
-  print('nomer_induk: ${nomer_induk}');
-  print('telepon: ${telepon}');
-  print('status_aktif: ${status_aktif}');
-  print('nama: ${nama}');
-  print('alamat: ${alamat}');
-  print('tgl_lahir: ${tgl_lahir}');
-  try {
-    final _response = await _dio.put(
-      '${_apiUrl}/anggota/${id}',
-      data: {
-        'nomor_induk': nomer_induk,
-        'nama': nama,
-        'alamat': alamat,
-        'tgl_lahir': tgl_lahir,
-        'telepon': telepon,
-        'status_aktif': status_aktif,
-      },
-      options: Options(
-        headers: {'Authorization': 'Bearer ${_storage.read('token')}'},
-      ),
-    );
-    print(_response.data);
-    Navigator.pop(context);
-    Navigator.pushReplacementNamed(context, '/anggota');
-  } on DioException catch (e) {
-    print('${e.response} - ${e.response?.statusCode}');
+    return;
   }
 }
 
@@ -286,32 +224,5 @@ void deleteUser(context, id) async {
     Navigator.pushReplacementNamed(context, '/home');
   } on DioException catch (e) {
     showAlertDialog(context, "Error", "something went wrong");
-  }
-}
-
-void getAnggotaDetail(id) async {
-  print('masuk getAnggotaDetail');
-  try {
-    final _response = await _dio.get(
-      '${_apiUrl}/anggota/${id}',
-      options: Options(
-        headers: {'Authorization': 'Bearer ${_storage.read('token')}'},
-      ),
-    );
-    _storage.write('anggotaId', _response.data['data']['anggota']['id']);
-    _storage.write('anggota_nomor_induk',
-        _response.data['data']['anggota']['nomor_induk']);
-    _storage.write(
-        'anggota_telepon', _response.data['data']['anggota']['telepon']);
-    _storage.write('anggota_status_aktif',
-        _response.data['data']['anggota']['status_aktif']);
-    _storage.write('anggota_nama', _response.data['data']['anggota']['nama']);
-    _storage.write(
-        'anggota_alamat', _response.data['data']['anggota']['alamat']);
-    _storage.write(
-        'anggota_tgl_lahir', _response.data['data']['anggota']['tgl_lahir']);
-    print(_storage.read('anggotaId'));
-  } on DioException catch (e) {
-    print('error : ${e.response} - ${e.response?.statusCode}');
   }
 }

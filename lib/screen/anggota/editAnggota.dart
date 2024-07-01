@@ -25,6 +25,7 @@ class _registerPageState extends State<editAnggotaPage> {
 
   @override
   Widget build(BuildContext context) {
+    // status_aktif = widget.anggotaDetail['status_aktif'];
     return Scaffold(
         appBar: AppBar(
           title: const Center(
@@ -60,7 +61,7 @@ class _registerPageState extends State<editAnggotaPage> {
             Padding(
               padding: EdgeInsets.only(top: 20),
               child: DropdownButton<int>(
-                value: status_aktif,
+                value: widget.anggotaDetail['status_aktif'],
                 items: [
                   DropdownMenuItem<int>(
                     child: Text("Aktif"),
@@ -74,7 +75,7 @@ class _registerPageState extends State<editAnggotaPage> {
                 onChanged: (int? value) {
                   if (value != null) {
                     setState(() {
-                      status_aktif = value;
+                      widget.anggotaDetail['status_aktif'] = value;
                     });
                   }
                 },
@@ -90,7 +91,7 @@ class _registerPageState extends State<editAnggotaPage> {
                           widget.anggotaDetail['id'].toString(),
                           nomerIndukController,
                           teleponController,
-                          status_aktif,
+                          widget.anggotaDetail['status_aktif'],
                           namaController,
                           alamatController,
                           tglLahirController,

@@ -18,6 +18,7 @@ class _homePageState extends State<homePage> {
   bool _isLoading = false;
 
   int _currentIndex = 1;
+  int anggotaCount = 0;
 
   @override
   void initState() {
@@ -32,6 +33,7 @@ class _homePageState extends State<homePage> {
     try {
       final anggotas = await getAllAnggota(context);
       _anggotas.value = anggotas;
+      anggotaCount = anggotas.length;
     } finally {
       setState(() {
         _isLoading = false;
@@ -83,6 +85,16 @@ class _homePageState extends State<homePage> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(left: 16, top: 18),
+                    child: textStyle(
+                        "Banyak Anggota: ${anggotaCount.toString()}", 12),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16, top: 10),
                     child: SizedBox(
                       width: 150,
                       child: ElevatedButton(
@@ -109,29 +121,29 @@ class _homePageState extends State<homePage> {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 31, top: 18),
-                    child: Container(
-                      width: 170,
-                      height: 40,
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Cari nama',
-                          prefixIcon: Icon(Icons.search),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          filled: true,
-                          fillColor: Color(0xfff0f0f0),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide:
-                                BorderSide(color: Color(0xffB0EBB4), width: 1),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(left: 31, top: 18),
+                  //   child: Container(
+                  //     width: 170,
+                  //     height: 40,
+                  //     child: TextField(
+                  //       decoration: InputDecoration(
+                  //         hintText: 'Cari nama',
+                  //         prefixIcon: Icon(Icons.search),
+                  //         border: OutlineInputBorder(
+                  //           borderRadius: BorderRadius.circular(20),
+                  //         ),
+                  //         filled: true,
+                  //         fillColor: Color(0xfff0f0f0),
+                  //         enabledBorder: OutlineInputBorder(
+                  //           borderRadius: BorderRadius.circular(10),
+                  //           borderSide:
+                  //               BorderSide(color: Color(0xffB0EBB4), width: 1),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
               SizedBox(
@@ -152,6 +164,7 @@ class _homePageState extends State<homePage> {
                             physics: NeverScrollableScrollPhysics(),
                             itemCount: anggotas.length,
                             itemBuilder: (context, index) {
+                              anggotaCount = anggotas.length;
                               final anggota = anggotas[index];
                               return Align(
                                 alignment: Alignment.center,

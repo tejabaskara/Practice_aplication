@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tugas_login/screen/anggota/anggota.dart';
 import 'package:tugas_login/screen/dashboard/home.dart';
 import 'package:tugas_login/screen/dashboard/landing.dart';
 import 'package:tugas_login/screen/loginRegister/login.dart';
@@ -27,7 +26,6 @@ class MyApp extends StatelessWidget {
         '/login': (context) => const loginPage(),
         '/home': (context) => const homePage(),
         '/profile': (context) => const profilePage(),
-        '/anggota': (context) => anggotaPage(),
         '/createAnggota': (context) => createAnggotaPage(),
         '/bunga': (context) => bungaPage(),
         '/addBunga': (context) => addBungaPage(),
