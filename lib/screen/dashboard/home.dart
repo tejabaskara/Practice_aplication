@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:tugas_login/component/format.dart';
 import 'package:tugas_login/component/text.dart';
@@ -19,6 +17,9 @@ class _homePageState extends State<homePage> {
   final _anggotas = ValueNotifier<List<Map<String, dynamic>>>([]);
   bool _isLoading = false;
 
+  int _currentIndex = 1;
+  int anggotaCount = 0;
+
   @override
   void initState() {
     super.initState();
@@ -32,6 +33,7 @@ class _homePageState extends State<homePage> {
     try {
       final anggotas = await getAllAnggota(context);
       _anggotas.value = anggotas;
+      anggotaCount = anggotas.length;
     } finally {
       setState(() {
         _isLoading = false;
@@ -51,7 +53,7 @@ class _homePageState extends State<homePage> {
                 width: double.infinity,
                 height: 110,
                 decoration: BoxDecoration(
-                  color: Color(0xfffbe7c9),
+                  color: Color(0xffB0EBB4),
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(30),
                     bottomRight: Radius.circular(30),
@@ -83,11 +85,21 @@ class _homePageState extends State<homePage> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(left: 16, top: 18),
+                    child: textStyle(
+                        "Banyak Anggota: ${anggotaCount.toString()}", 12),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16, top: 10),
                     child: SizedBox(
                       width: 150,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xffD9D9D9),
+                          backgroundColor: Color(0xffB0EBB4),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
@@ -109,24 +121,29 @@ class _homePageState extends State<homePage> {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 31, top: 18),
-                    child: Container(
-                      width: 170,
-                      height: 40,
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Cari nama',
-                          prefixIcon: Icon(Icons.search),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          filled: true,
-                          fillColor: Color(0xfff0f0f0),
-                        ),
-                      ),
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(left: 31, top: 18),
+                  //   child: Container(
+                  //     width: 170,
+                  //     height: 40,
+                  //     child: TextField(
+                  //       decoration: InputDecoration(
+                  //         hintText: 'Cari nama',
+                  //         prefixIcon: Icon(Icons.search),
+                  //         border: OutlineInputBorder(
+                  //           borderRadius: BorderRadius.circular(20),
+                  //         ),
+                  //         filled: true,
+                  //         fillColor: Color(0xfff0f0f0),
+                  //         enabledBorder: OutlineInputBorder(
+                  //           borderRadius: BorderRadius.circular(10),
+                  //           borderSide:
+                  //               BorderSide(color: Color(0xffB0EBB4), width: 1),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
               SizedBox(
@@ -147,6 +164,7 @@ class _homePageState extends State<homePage> {
                             physics: NeverScrollableScrollPhysics(),
                             itemCount: anggotas.length,
                             itemBuilder: (context, index) {
+                              anggotaCount = anggotas.length;
                               final anggota = anggotas[index];
                               return Align(
                                 alignment: Alignment.center,
@@ -164,7 +182,7 @@ class _homePageState extends State<homePage> {
                                     width:
                                         MediaQuery.of(context).size.width * 0.9,
                                     decoration: BoxDecoration(
-                                      color: Color(0xffD9D9D9),
+                                      color: Color(0xffE0FBE2),
                                       borderRadius: BorderRadius.circular(30),
                                     ),
                                     child: Padding(
@@ -213,7 +231,7 @@ class _homePageState extends State<homePage> {
                                                       horizontal: 10,
                                                       vertical: 5),
                                                   decoration: BoxDecoration(
-                                                    color: Color(0xffFFFFFF),
+                                                    color: Color(0xffACE1AF),
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             20),
@@ -264,6 +282,10 @@ class _homePageState extends State<homePage> {
     return BottomNavigationBar(
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
+          icon: Icon(Icons.money),
+          label: 'Bunga',
+        ),
+        BottomNavigationBarItem(
           icon: Icon(Icons.home),
           label: 'Home',
         ),
@@ -272,7 +294,9 @@ class _homePageState extends State<homePage> {
           label: 'Profile',
         ),
       ],
+      currentIndex: _currentIndex,
       selectedItemColor: Colors.blue,
+      backgroundColor: Color(0xffBFF6C3),
       onTap: _onTap,
     );
   }
@@ -280,9 +304,12 @@ class _homePageState extends State<homePage> {
   void _onTap(int tabIndex) {
     switch (tabIndex) {
       case 0:
-        Navigator.pushNamed(context, '/home');
+        Navigator.pushNamed(context, '/bunga');
         break;
       case 1:
+        Navigator.pushNamed(context, '/home');
+        break;
+      case 2:
         Navigator.pushNamed(context, '/profile');
         break;
     }

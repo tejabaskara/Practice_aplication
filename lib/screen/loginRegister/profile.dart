@@ -19,12 +19,18 @@ class _profilePageState extends State<profilePage> {
     // userInfo();
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-            child: Text("PROFILE",
-                style: GoogleFonts.inter(
-                    textStyle: TextStyle(color: Colors.black),
-                    fontWeight: FontWeight.bold))),
-        backgroundColor: Color(0xffcfe17c),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+            Navigator.pushReplacementNamed(context, '/home');
+          },
+        ),
+        title: Text("PROFILE",
+            style: GoogleFonts.inter(
+                textStyle: TextStyle(color: Colors.black),
+                fontWeight: FontWeight.bold)),
+        backgroundColor: Color(0xffB0EBB4),
       ),
       body: ListView(
         children: [

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tugas_login/component/dialogBox.dart';
 import 'package:tugas_login/component/format.dart';
 import 'package:tugas_login/component/text.dart';
 import 'package:tugas_login/dataSource/anggota.dart';
 import 'package:tugas_login/dataSource/tabungan.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:tugas_login/screen/anggota/editAnggota.dart';
 import 'package:tugas_login/screen/tabungan/addTabungan.dart';
 
@@ -26,8 +24,8 @@ class _detailTabunganState extends State<detailAnggotaPage> {
   @override
   void initState() {
     super.initState();
-    _fetchTrxHistories();
     _fetchTrxType();
+    _fetchTrxHistories();
   }
 
   Future<void> _fetchTrxType() async {
@@ -52,19 +50,18 @@ class _detailTabunganState extends State<detailAnggotaPage> {
 
   String _getTrxTypeName(int id) {
     List<Map<String, dynamic>> trxTypeList = _trxType.value;
-    if (trxTypeList.isNotEmpty && id >= 1 && id <= trxTypeList.length) {
+    if (trxTypeList.isNotEmpty && id > 0 && id <= trxTypeList.length) {
       return trxTypeList[id - 1]['trx_name'];
     } else {
       return 'Transaksi';
     }
   }
 
-  // final _storage = GetStorage();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color(0xffACE1AF),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -94,7 +91,7 @@ class _detailTabunganState extends State<detailAnggotaPage> {
           height: 200,
           width: double.infinity,
           decoration: BoxDecoration(
-            color: Color(0xffD9D9D9),
+            color: Color(0xffB0EBB4),
             borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(20),
                 bottomRight: Radius.circular(20)),
@@ -134,7 +131,7 @@ class _detailTabunganState extends State<detailAnggotaPage> {
                       padding:
                           EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                       decoration: BoxDecoration(
-                        color: Color(0xffFFFFFF),
+                        color: Color(0xffACE1AF),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Row(
@@ -268,7 +265,7 @@ class _detailTabunganState extends State<detailAnggotaPage> {
                       return SingleChildScrollView(
                         child: ListView.separated(
                           separatorBuilder: (context, index) => const SizedBox(
-                            height: 10,
+                            height: 20,
                           ),
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
@@ -278,34 +275,38 @@ class _detailTabunganState extends State<detailAnggotaPage> {
                             return Align(
                               alignment: Alignment.center,
                               child: GestureDetector(
-                                onTap: () {
-                                  Navigator.pushNamed(context, '/home');
-                                },
                                 child: Card(
                                   color: trx['trx_id'] == 1
                                       ? Colors.white
-                                      : trx['trx_id'] == 2
+                                      : trx['trx_id'] == 2 || trx['trx_id'] == 5
                                           ? Colors.green
-                                          : trx['trx_id'] == 3
+                                          : trx['trx_id'] == 3 ||
+                                                  trx['trx_id'] == 6
                                               ? Colors.red
-                                              : Colors.yellow,
+                                              : trx['trx_id'] == 4
+                                                  ? Colors.blue
+                                                  : Colors.yellow,
                                   child: ListTile(
-                                    title: trx['trx_id'] == 1
-                                        ? textStyle('Saldo Awal', 11)
-                                        : trx['trx_id'] == 2
-                                            ? textStyle(
-                                                "Simpanan ${trx['id']}", 11)
-                                            : trx['trx_id'] == 3
-                                                ? textStyle(
-                                                    "Penarikan ${trx['id']}",
-                                                    11)
-                                                : textStyle(
-                                                    "Bunga Simpanan ${trx['id']}",
-                                                    11),
+                                    leading: Icon(
+                                      trx['trx_id'] == 1
+                                          ? Icons.account_balance
+                                          : trx['trx_id'] == 2
+                                              ? Icons.add
+                                              : trx['trx_id'] == 3
+                                                  ? Icons.remove
+                                                  : trx['trx_id'] == 4
+                                                      ? Icons.money
+                                                      : Icons.edit,
+                                      color: Colors.black,
+                                    ),
+                                    title:
+                                        // Text(trx['trx_id'].toString()),
+                                        textBoldStyle(
+                                            _getTrxTypeName(trx['trx_id']), 11),
                                     subtitle: textStyle(
                                         CurrencyFormat.convertToIdr(
                                             trx['trx_nominal'], 2),
-                                        11),
+                                        13),
                                     trailing: textStyle(trx['trx_tanggal'], 11),
                                   ),
                                 ),

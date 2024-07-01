@@ -8,28 +8,6 @@ final _dio = Dio();
 final _storage = GetStorage();
 final _apiUrl = 'https://mobileapis.manpits.xyz/api';
 
-void getBanyakAnggota() async {
-  int count = 0;
-  try {
-    final _response = await _dio.get(
-      '${_apiUrl}/anggota',
-      options: Options(
-        headers: {'Authorization': 'Bearer ${_storage.read('token')}'},
-      ),
-    );
-    _storage.write('banyak_anggota', _response.data['data']['anggotas'].length);
-    for (var anggota in _response.data['data']['anggotas']) {
-      count += 1;
-
-      _storage.write('id_${count}', anggota['id']);
-      print(_storage.read('id_${count}'));
-    }
-    print("panjang anggota: ${_storage.read('banyak_anggota')}");
-  } on DioException catch (e) {
-    print('${e.response} - ${e.response?.statusCode}');
-  }
-}
-
 Future<int> getSaldo(id) async {
   int saldo = 0;
 
@@ -47,12 +25,6 @@ Future<int> getSaldo(id) async {
   } on DioException catch (e) {
     print('${e.response} - ${e.response?.statusCode}');
     return saldo;
-  }
-}
-
-void iterationSaldo() {
-  for (var i = 0; i <= _storage.read('banyak_anggota'); i++) {
-    getSaldo(_storage.read('id_${i}'));
   }
 }
 
@@ -85,7 +57,14 @@ void addTabungan(
       },
     ));
   } on DioException catch (e) {
-    showAlertDialog(context, "Error", "something went wrong");
+    if (e.response!.statusCode! == 406) {
+      showAlertDialogExpiredToken(context);
+    } else if (e.response!.statusCode! < 500) {
+      showAlertDialog(context, "Error",
+          "Terjadi kesalahan saat menambahkan tabungan, coba ulang");
+    } else {
+      showAlertDialog(context, "Error", "Internal Server Error");
+    }
     return;
   }
 }
@@ -106,7 +85,14 @@ void addSaldoAwal(
     Navigator.pop(context);
     Navigator.pushReplacementNamed(context, "/home");
   } on DioException catch (e) {
-    print('error: ${e.response} - ${e.response?.statusCode}');
+    if (e.response!.statusCode! == 406) {
+      showAlertDialogExpiredToken(context);
+    } else if (e.response!.statusCode! < 500) {
+      showAlertDialog(context, "Error",
+          "Terjadi kesalahan saat menambahkan saldo, coba ulang");
+    } else {
+      showAlertDialog(context, "Error", "Internal Server Error");
+    }
   }
 }
 
@@ -126,7 +112,9 @@ Future<List<Map<String, dynamic>>> getAllTrxMember(
         List<Map<String, dynamic>>.from(response.data['data']['tabungan']);
     return trxHistories;
   } on DioException catch (e) {
-    if (e.response!.statusCode! < 500) {
+    if (e.response!.statusCode! == 406) {
+      showAlertDialogExpiredToken(context);
+    } else if (e.response!.statusCode! < 500) {
       showAlertDialog(context, "Error",
           "Terjadi kesalahan saat mendapatkan histori transaksi member, coba ulang");
     } else {
@@ -159,6 +147,55 @@ Future<List<Map<String, dynamic>>> getTrxType(BuildContext context) async {
       showAlertDialog(context, "Error", "Internal Server Error");
     }
   }
-
   return trxType;
+}
+
+Future<List<Map<String, dynamic>>> getBunga(BuildContext context) async {
+  List<Map<String, dynamic>> bunga = [];
+
+  try {
+    final response = await _dio.get(
+      '$_apiUrl/settingbunga',
+      options: Options(
+        headers: {'Authorization': 'Bearer ${_storage.read('token')}'},
+      ),
+    );
+
+    bunga =
+        List<Map<String, dynamic>>.from(response.data['data']['settingbungas']);
+    return bunga;
+  } on DioException catch (e) {
+    if (e.response!.statusCode! < 500) {
+      showAlertDialog(context, "Error",
+          "Terjadi kesalahan saat mendapatkan data jenis transaksi, coba ulang");
+    } else {
+      showAlertDialog(context, "Error", "Internal Server Error");
+    }
+  }
+  return bunga;
+}
+
+void addBunga(
+  int formIsAktif,
+  TextEditingController formBunga_nominal,
+  BuildContext context,
+) async {
+  try {
+    final _response = await _dio.post(
+      '${_apiUrl}/addsettingbunga',
+      data: {
+        'persen': formBunga_nominal.text,
+        'isaktif': formIsAktif.toString(),
+      },
+      options: Options(
+        headers: {'Authorization': 'Bearer ${_storage.read('token')}'},
+      ),
+    );
+    print(_response);
+    Navigator.pop(context);
+    Navigator.pushNamed(context, '/bunga');
+  } on DioException catch (e) {
+    showAlertDialog(context, "Error", "something went wrong");
+    return;
+  }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:tugas_login/dataSource/anggota.dart';
+import 'package:tugas_login/component/formInput.dart';
 
 class createAnggotaPage extends StatefulWidget {
   const createAnggotaPage({super.key});
@@ -39,7 +40,7 @@ class _registerPageState extends State<createAnggotaPage> {
               child: Text("TAMBAH ANGGOTA",
                   style: TextStyle(
                       color: Colors.black, fontWeight: FontWeight.bold))),
-          backgroundColor: const Color(0xffcfe17c),
+          backgroundColor: const Color(0xffACE1AF),
         ),
         body: ListView(children: [
           Column(children: [
@@ -75,6 +76,7 @@ class _registerPageState extends State<createAnggotaPage> {
             formInput('Alamat', alamatController),
             datePicker('Tanggal Lahir', tglLahirController, context),
             formInput('Nomer Telepon', teleponController),
+            formInput('Saldo Anggota', saldoController),
             Padding(
               padding: EdgeInsets.only(top: 20),
               child: DropdownButton<int>(
@@ -98,7 +100,6 @@ class _registerPageState extends State<createAnggotaPage> {
                 },
               ),
             ),
-            formInput('Saldo', saldoController),
             Padding(
                 padding: EdgeInsets.only(top: 10, bottom: 50),
                 child: ElevatedButton(
@@ -135,35 +136,35 @@ class _registerPageState extends State<createAnggotaPage> {
   }
 }
 
-Widget formInput(String label, TextEditingController controller,
-    {bool isDatePicker = false}) {
-  return Padding(
-      padding: EdgeInsets.only(top: 20),
-      child: Center(
-          child: SizedBox(
-        width: 276,
-        child: TextField(
-          controller: controller,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            labelText: label,
-            fillColor: Color(0xffD9D9D9),
-            filled: true,
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(color: Colors.blueGrey, width: 1),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(color: Colors.red, width: 1),
-            ),
-          ),
-          onChanged: (value) {
-            print(controller.text);
-          },
-        ),
-      )));
-}
+// Widget formInput(String label, TextEditingController controller,
+//     {bool isDatePicker = false}) {
+//   return Padding(
+//       padding: EdgeInsets.only(top: 20),
+//       child: Center(
+//           child: SizedBox(
+//         width: 276,
+//         child: TextField(
+//           controller: controller,
+//           decoration: InputDecoration(
+//             border: OutlineInputBorder(),
+//             labelText: label,
+//             fillColor: Color(0xffD9D9D9),
+//             filled: true,
+//             enabledBorder: OutlineInputBorder(
+//               borderRadius: BorderRadius.circular(10),
+//               borderSide: BorderSide(color: Colors.blueGrey, width: 1),
+//             ),
+//             focusedBorder: OutlineInputBorder(
+//               borderRadius: BorderRadius.circular(10),
+//               borderSide: BorderSide(color: Colors.red, width: 1),
+//             ),
+//           ),
+//           onChanged: (value) {
+//             print(controller.text);
+//           },
+//         ),
+//       )));
+// }
 
 Widget datePicker(
     String label, TextEditingController controller, BuildContext context) {
